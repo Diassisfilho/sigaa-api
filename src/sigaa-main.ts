@@ -9,6 +9,7 @@ import { HTTPFactory, SigaaHTTPFactory } from '@session/sigaa-http-factory';
 import { Login } from '@session/login/sigaa-login';
 import { SigaaLoginIFSC } from '@session/login/sigaa-login-ifsc';
 import { SigaaLoginUFPB } from '@session/login/sigaa-login-ufpb';
+import { SigaaLoginUNILAB } from '@session/login/sigaa-login-unilab';
 import { InstitutionType, Session, SigaaSession } from '@session/sigaa-session';
 import { SigaaCookiesController } from '@session/sigaa-cookies-controller';
 import { SigaaPageCacheWithBond } from '@session/sigaa-page-cache-with-bond';
@@ -294,10 +295,27 @@ export class Sigaa {
       );
     }
 
+    switch (options.login || options.institution) {
+      case 'IFSC':
+        this.loginInstance = new SigaaLoginIFSC(this.http, this.session);
+        break;
+      case 'UFPB':
+        this.loginInstance = new SigaaLoginUFPB(this.http, this.session);
+        break;
+      case 'UNILAB':
+        this.loginInstance = new SigaaLoginUNILAB(this.http, this.session);
+        break;
+      default:
+        this.loginInstance = new SigaaLoginIFSC(this.http, this.session);
+        break;
+    }
+
+    /* 
     this.loginInstance =
       options.login || options.institution === 'UFPB'
         ? new SigaaLoginUFPB(this.http, this.session)
         : new SigaaLoginIFSC(this.http, this.session);
+    */
   }
 
   /**

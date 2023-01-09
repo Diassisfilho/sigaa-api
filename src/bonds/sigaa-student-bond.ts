@@ -122,7 +122,10 @@ export class SigaaStudentBond implements StudentBond {
       button: null
     };
 
-    const tableHeaderCellElements = table.find('thead > tr td').toArray();
+    var tableHeaderCellElements = table.find('thead > tr td').toArray();
+    if (!tableHeaderCellElements.length)
+      tableHeaderCellElements = table.find('thead > tr th').toArray();
+
     for (let column = 0; column < tableHeaderCellElements.length; column++) {
       const cellContent = this.parser.removeTagsHtml(
         coursesPage.$(tableHeaderCellElements[column]).html()

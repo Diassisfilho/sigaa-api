@@ -14,6 +14,7 @@ import { CourseResourcesManagerFactory } from './sigaa-course-resources-manager-
 import { Exam } from '@courseResources/sigaa-exam-student';
 import { Syllabus } from '@courseResources/sigaa-syllabus-student';
 import { LessonParserFactory } from './sigaa-lesson-parser-factory';
+import { SubMenuStatus } from '../sigaa-types';
 
 import {
   GradeGroup,
@@ -335,7 +336,7 @@ export class SigaaCourseStudent implements CourseStudent {
   private async getCourseSubMenu(
     buttonLabel: string,
     retry = true
-  ): Promise<Page> {
+  ): Promise<Page | SubMenuStatus> {
     if (buttonLabel === this.currentCoursePage) {
       if (this.currentPageCache) return this.currentPageCache;
     }
@@ -366,6 +367,13 @@ export class SigaaCourseStudent implements CourseStudent {
         form.action.href,
         form.postValues
       );
+
+      if (buttonLabel === 'Ver Notas') {
+        if (
+          pageResponse.bodyDecoded.includes('Ainda não foram lançadas notas.')
+        )
+          return SubMenuStatus.NoExist;
+      }
       this.verifyIfCoursePageIsValid(pageResponse, buttonLabel);
       if (pageResponse.bodyDecoded.includes('Menu Turma Virtual')) {
         this.currentPageCache = pageResponse;
@@ -426,6 +434,8 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getLessons(): Promise<Lesson[]> {
     const pageLessonsOne = await this.getCourseSubMenu('Principal');
+    if (pageLessonsOne == SubMenuStatus.NoExist) return [];
+
     let onclick;
 
     const pageLessonsOneType =
@@ -476,6 +486,8 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getFiles(): Promise<File[]> {
     const page = await this.getCourseSubMenu('Arquivos');
+    if (page === SubMenuStatus.NoExist) return [];
+
     const table = page.$('.listing');
     const usedFilesId = [];
     if (table.length !== 0) {
@@ -514,6 +526,7 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getForums(): Promise<CourseForum[]> {
     const page = await this.getCourseSubMenu('Fóruns');
+    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
     const usedForumIds: string[] = [];
@@ -564,6 +577,8 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getNews(): Promise<News[]> {
     const page = await this.getCourseSubMenu('Notícias');
+    if (page === SubMenuStatus.NoExist) return [];
+
     const table = page.$('.listing');
     const usedNewsId = [];
     if (table.length !== 0) {
@@ -600,6 +615,9 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getAbsence(): Promise<AbsenceList> {
     const page = await this.getCourseSubMenu('Frequência');
+    if (page === SubMenuStatus.NoExist)
+      return { maxAbsences: 0, totalAbsences: 0, list: [] };
+
     const table = page.$('.listing');
     const absences: AbsenceDay[] = [];
     const rows = table.find('tr[class]').toArray();
@@ -686,6 +704,7 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getQuizzes(): Promise<Quiz[]> {
     const page = await this.getCourseSubMenu('Questionários');
+    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
 
@@ -763,6 +782,7 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getWebContents(): Promise<WebContent[]> {
     const page = await this.getCourseSubMenu('Conteúdo/Página web');
+    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
 
@@ -815,6 +835,8 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getHomeworks(): Promise<Homework[]> {
     const page = await this.getCourseSubMenu('Tarefas');
+    if (page === SubMenuStatus.NoExist) return [];
+
     const tables = page.$('.listing').toArray();
     if (!tables) return [];
     const usedHomeworksIds = [];
@@ -915,6 +937,7 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getMembers(): Promise<MemberList> {
     const page = await this.getCourseSubMenu('Participantes');
+    if (page === SubMenuStatus.NoExist) return { teachers: [], students: [] };
 
     const tables = page.$('table.participantes').toArray();
     const tablesNames = page.$('fieldset').toArray();
@@ -1101,7 +1124,11 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getGrades(retry = true): Promise<GradeGroup[]> {
     try {
+      const grades: GradeGroup[] = [];
+
       const page = await this.getCourseSubMenu('Ver Notas', retry);
+      if (page === SubMenuStatus.NoExist) return grades;
+
       const getPositionByCellColSpan = (
         ths: cheerio.Cheerio,
         cell: cheerio.Element
@@ -1127,7 +1154,6 @@ export class SigaaCourseStudent implements CourseStudent {
       if (valueCells.length === 0) {
         throw new Error('SIGAA: Page grades without grades.');
       }
-      const grades: GradeGroup[] = [];
 
       const theadElements: cheerio.Cheerio[] = [];
       for (const theadTr of theadTrs) {
@@ -1284,6 +1310,14 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getSyllabus(): Promise<Syllabus> {
     const page = await this.getCourseSubMenu('Plano de Ensino');
+    if (page === SubMenuStatus.NoExist)
+      return {
+        schedule: [],
+        evaluations: [],
+        basicReferences: [],
+        supplementaryReferences: []
+      };
+
     const tables = page.$('table.listagem').toArray();
 
     const response: Syllabus = {
