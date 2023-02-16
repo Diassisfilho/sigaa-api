@@ -49,13 +49,6 @@ export interface File extends UpdatableResource<FileData> {
    *Description in the sigaa
    */
   readonly description?: string;
-  /**
-   * Download the file
-   * @param destpath path to save file
-   * @param callback callback to view download progress
-   * @retuns Promise with the path where the file was saved.
-   */
-  download(destpath: string, callback?: ProgressCallback): Promise<string>;
 }
 
 /**
@@ -129,37 +122,4 @@ export class SigaaFile extends AbstractUpdatableResource implements File {
     return this._id;
   }
 
-  async download(
-    basepath: string,
-    callback?: ProgressCallback,
-    retry = true
-  ): Promise<string> {
-    this.checkIfItWasClosed();
-    if (this.form) {
-      return this.http
-        .downloadFileByPost(
-          this.form.action.href,
-          this.form.postValues,
-          basepath,
-          callback
-        )
-        .catch(async (err) => {
-          this.form = undefined;
-          await this.updateInstance();
-          if (retry) return this.download(basepath, callback, false);
-          else throw err;
-        });
-    } else if (this.key != null) {
-      const fileDownloadPath = `/sigaa/verFoto?idArquivo=${this.id}&key=${this.key}`;
-      return this.http
-        .downloadFileByGet(fileDownloadPath, basepath, callback)
-        .catch((err) => {
-          if (retry) return this.download(basepath, callback, false);
-          else throw err;
-        });
-    }
-    throw new Error(
-      'SIGAA: Could not download the file because the key is missing.'
-    );
-  }
 }

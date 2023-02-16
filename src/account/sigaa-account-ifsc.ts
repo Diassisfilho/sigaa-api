@@ -255,21 +255,6 @@ export class SigaaAccountIFSC implements Account {
   }
 
   /**
-   * Download profile url and save in basepath.
-   * @param destpath It can be a folder or a file name, if it is a directory then it will be saved inside the folder, if it is a file name it will be saved exactly in this place, but if the folder does not exist it will throw an error.
-   * @param callback To know the progress of the download, each downloaded part will be called informing how much has already been downloaded.
-   * @retuns Full path of the downloaded file, useful if the destpath is a directory, or null if the user has no photo.
-   */
-  async downloadProfilePicture(
-    destpath: string,
-    callback?: ProgressCallback
-  ): Promise<string | null> {
-    const pictureURL = await this.getProfilePictureURL();
-    if (!pictureURL) return null;
-    return this.http.downloadFileByGet(pictureURL.href, destpath, callback);
-  }
-
-  /**
    * @inheritdoc
    */
   async getName(): Promise<string> {

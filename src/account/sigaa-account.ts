@@ -36,17 +36,6 @@ export interface Account {
   getInactiveBonds(): Promise<BondType[]>;
 
   /**
-   * Download profile url and save in basepath.
-   * @param destpath It can be either a folder or a file name, if the path is a directory then it will be saved inside the folder, if it is a file name it will be saved exactly in this place, but if the folder does not exist it will throw an error.
-   * @param callback To know the progress of the download, each downloaded part will be called informing how much has already been downloaded.
-   * @retuns Full path of the downloaded file, useful if the destpath is a directory, or null if the user has no photo.
-   */
-  downloadProfilePicture(
-    destpath: string,
-    callback?: ProgressCallback
-  ): Promise<string | null>;
-
-  /**
    * Get profile picture URL
    * @retuns Picture url or null if the user has no photo.
    */

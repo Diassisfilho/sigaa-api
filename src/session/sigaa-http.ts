@@ -1,6 +1,4 @@
 import * as http from 'http';
-import * as path from 'path';
-import * as fs from 'fs';
 import * as stream from 'stream';
 import iconv from 'iconv-lite';
 import { FormData } from 'formdata-node';
@@ -87,31 +85,6 @@ export interface HTTP {
   get(path: string, options?: SigaaRequestOptions): Promise<Page>;
 
   /**
-   * Download a file
-   * @param urlPath file url
-   * @param destpath path to save file
-   * @param callback callback to view download progress
-   */
-  downloadFileByGet(
-    urlPath: string,
-    destpath: string,
-    callback?: ProgressCallback
-  ): Promise<string>;
-
-  /**
-   * Download a file
-   * @param urlPath file url
-   * @param basepath path to save file
-   * @param callback callback to view download progress
-   */
-  downloadFileByPost(
-    urlPath: string,
-    postValues: Record<string, string>,
-    basepath: string,
-    callback?: ProgressCallback
-  ): Promise<string>;
-
-  /**
    * Follow the redirect while the page response redirects to another page
    * @param page
    * @returns The last page of redirects
@@ -132,123 +105,6 @@ export interface HTTP {
  */
 export class SigaaHTTP implements HTTP {
   constructor(private session: HTTPSession) {}
-
-  /**
-   * @inheritdoc
-   */
-  async downloadFileByGet(
-    urlPath: string,
-    basepath: string,
-    callback?: ProgressCallback
-  ): Promise<string> {
-    const url = this.session.getURL(urlPath);
-    const httpOptions = this.getRequestBasicOptions('GET', url);
-    return this.downloadFile(url, basepath, httpOptions, undefined, callback);
-  }
-
-  /**
-   * @inheritdoc
-   */
-  downloadFileByPost(
-    urlPath: string,
-    postValues: Record<string, string>,
-    basepath: string,
-    callback?: ProgressCallback
-  ): Promise<string> {
-    const url = this.session.getURL(urlPath);
-    const { httpOptions, body } = this.encodePostValue(url, postValues);
-    return this.downloadFile(url, basepath, httpOptions, body, callback);
-  }
-
-  /**
-   * @inheritdoc
-   */
-  private async downloadFile(
-    url: URL,
-    basepath: string,
-    httpOptions: HTTPRequestOptions,
-    body?: string,
-    callback?: ProgressCallback
-  ): Promise<string> {
-    const sessionHttpOptions = await this.session.afterHTTPOptions(
-      url,
-      httpOptions
-    );
-
-    const fileStats = await fs.promises.lstat(basepath);
-    if (!(fileStats.isDirectory() || fileStats.isFile())) {
-      throw new Error('SIGAA: Download basepath not exists.');
-    }
-
-    const suspendRequest = await this.session.beforeDownloadRequest(
-      url,
-      basepath,
-      sessionHttpOptions,
-      body,
-      callback
-    );
-    if (suspendRequest) return suspendRequest;
-
-    const { bodyStream, headers, statusCode } = await this.requestHTTP(
-      httpOptions,
-      body
-    );
-
-    if (statusCode === 302) throw new Error('SIGAA: Download expired.');
-
-    if (statusCode !== 200)
-      throw new Error('SIGAA: Invalid status code at download file page.');
-
-    let filepath: string;
-    if (fileStats.isDirectory()) {
-      if (headers['content-disposition']) {
-        const filename = headers['content-disposition']
-          .replace(/([\S\s]*?)filename="/gm, '')
-          .slice(0, -1);
-        filepath = path.join(basepath, filename);
-      } else {
-        throw new Error('SIGAA: Invalid response at download file page.');
-      }
-    } else {
-      filepath = basepath;
-    }
-
-    const file = fs.createWriteStream(filepath);
-    bodyStream.pipe(file); // save to file
-
-    if (callback) {
-      bodyStream.on('data', () => {
-        callback(file.bytesWritten);
-      });
-    }
-
-    const finalPath = await new Promise<string>((resolve, reject) => {
-      file.on('finish', () => {
-        file.close(); // close() is sync, call resolve after close completes.
-        resolve(filepath);
-      });
-
-      bodyStream.on('error', (err) => {
-        file.close();
-        fs.promises.unlink(filepath);
-        reject(err);
-      });
-
-      file.on('error', (err) => {
-        file.close();
-        fs.unlinkSync(filepath);
-        reject(err);
-      });
-    });
-    return this.session.afterDownloadRequest(
-      url,
-      basepath,
-      sessionHttpOptions,
-      finalPath,
-      body,
-      callback
-    );
-  }
 
   /**
    * @inheritdoc

@@ -1,7 +1,6 @@
 import { Account } from '@account/sigaa-account';
 import { BondFactory, SigaaBondFactory } from '@bonds/sigaa-bond-factory';
 import { Parser, SigaaParser } from '@helpers/sigaa-parser';
-import { FileData, SigaaFile } from '@resources/sigaa-file';
 import { SigaaSearch } from '@search/sigaa-search';
 import { HTTPSession, SigaaHTTPSession } from '@session/sigaa-http-session';
 import { HTTP } from '@session/sigaa-http';
@@ -334,16 +333,6 @@ export class Sigaa {
       );
       return this.accountFactory.getAccount(retryPage);
     }
-  }
-
-  /**
-   * Load file to download.
-   * @param options
-   * @param options.id file id
-   * @param options.key file key
-   */
-  loadFile(options: FileData): SigaaFile {
-    return new SigaaFile(this.http, options);
   }
 
   /**

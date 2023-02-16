@@ -31,10 +31,6 @@ export interface TeacherResult {
    * @param basepath path to save file
    * @param callback
    */
-  downloadProfilePicture(
-    basepath: string,
-    callback: ProgressCallback
-  ): Promise<string>;
 }
 
 /**
@@ -86,19 +82,6 @@ export class SigaaSearchTeacherResult implements TeacherResult {
 
   get profilePictureURL(): URL | undefined {
     return this._photoURL;
-  }
-
-  downloadProfilePicture(
-    basepath: string,
-    callback: ProgressCallback
-  ): Promise<string> {
-    if (!this.profilePictureURL)
-      throw new Error("SIGAA: This teacher doesn't have profile picture");
-    return this.http.downloadFileByGet(
-      this.profilePictureURL.href,
-      basepath,
-      callback
-    );
   }
 
   get department(): string {

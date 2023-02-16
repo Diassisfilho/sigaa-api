@@ -81,36 +81,6 @@ export class SigaaHTTPWithBond implements HTTP {
   /**
    * @inheritdoc
    */
-  async downloadFileByGet(
-    urlPath: string,
-    basepath: string,
-    callback?: ProgressCallback
-  ): Promise<string> {
-    await this.verifyIfBondIsCorrect();
-    return this.http.downloadFileByGet(urlPath, basepath, callback);
-  }
-
-  /**
-   * @inheritdoc
-   */
-  async downloadFileByPost(
-    urlPath: string,
-    postValues: Record<string, string>,
-    basepath: string,
-    callback?: ProgressCallback
-  ): Promise<string> {
-    await this.verifyIfBondIsCorrect();
-    return this.http.downloadFileByPost(
-      urlPath,
-      postValues,
-      basepath,
-      callback
-    );
-  }
-
-  /**
-   * @inheritdoc
-   */
   async followAllRedirect(
     page: Page,
     options?: SigaaRequestOptions
