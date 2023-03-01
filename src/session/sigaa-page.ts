@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import { decode as htmlEntitiesDecode } from 'he';
 
-import * as http from 'http';
+import { AxiosResponseHeaders } from "axios";
 import { load as $load } from 'cheerio';
 import { HTTPMethod } from '../sigaa-types';
 import { HTTPRequestOptions } from './sigaa-http';
@@ -14,7 +14,7 @@ export interface SigaaPageConstructor {
   body: string;
   requestOptions: HTTPRequestOptions;
   url: URL;
-  headers: http.IncomingHttpHeaders;
+  headers: AxiosResponseHeaders;
   statusCode: number;
 }
 

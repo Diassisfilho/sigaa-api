@@ -1,10 +1,6 @@
-import * as http from 'http';
-import * as stream from 'stream';
-import iconv from 'iconv-lite';
+import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { FormData } from 'formdata-node';
 import { URL } from 'url';
-import { request as HTTPRequest, RequestOptions } from 'https';
-import { createBrotliDecompress, createGunzip, createInflate } from 'zlib';
 import { stringify } from 'querystring';
 import { HTTPMethod } from '../sigaa-types';
 import { HTTPSession } from './sigaa-http-session';
@@ -30,19 +26,11 @@ export interface SigaaRequestOptions {
 /**
  * @category Internal
  */
-export interface HTTPRequestOptions extends RequestOptions {
+export interface HTTPRequestOptions {
   hostname: string;
+  path: string;
   method: HTTPMethod;
   headers: Record<string, string>;
-}
-
-/**
- * @category Internal
- */
-export interface HTTPResponse {
-  bodyStream: NodeJS.ReadableStream;
-  headers: http.IncomingHttpHeaders;
-  statusCode: number;
 }
 
 /**
@@ -131,7 +119,6 @@ export class SigaaHTTP implements HTTP {
   ): HTTPRequestOptions {
     const basicOptions: HTTPRequestOptions = {
       hostname: link.hostname,
-      port: 443,
       path: link.pathname + link.search,
       method: method,
       headers: {
@@ -305,25 +292,24 @@ export class SigaaHTTP implements HTTP {
         return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
       }
 
-      const { bodyStream, headers, statusCode } = await this.requestHTTP(
+      const { data , headers, status, request } = await this.requestHTTP(
         httpOptions,
         requestBody
       );
-
-      const bodyBuffer = await this.convertReadebleToBuffer(bodyStream);
+      const redirectedURL = new URL(request.res.responseUrl);
 
       const page = new SigaaPage({
         requestOptions: httpOptions,
-        body: bodyBuffer.toString(),
-        url,
-        headers,
-        statusCode,
+        body: data.toString(),
+        url: (redirectedURL)? redirectedURL : url,
+        headers: headers as AxiosResponseHeaders,
+        statusCode : status,
         requestBody
       });
       return this.session.afterSuccessfulRequest(page, options);
     } catch (err) {
       return this.session.afterUnsuccessfulRequest(
-        err,
+        err as Error,
         httpOptions,
         requestBody
       );
@@ -338,76 +324,27 @@ export class SigaaHTTP implements HTTP {
   protected async requestHTTP(
     optionsHTTP: HTTPRequestOptions,
     body?: string | Buffer
-  ): Promise<HTTPResponse> {
+  ): Promise<AxiosResponse<any, any>> {
     return new Promise((resolve, reject) => {
-      const req = HTTPRequest(optionsHTTP, (response) => {
-        resolve(this.parserResponse(response));
-      });
+      const {hostname, path, method, headers} = optionsHTTP;
+      const baseURL = "https://"+hostname;
+      const data = (body)? body : undefined;
+      const url = path as string | undefined;
 
-      req.on('error', (err) => {
-        reject(err);
-      });
+      axios({
+        baseURL,
+        url,
+        data,
+        method,
+        headers
+      }).then((response) => {
+        resolve(response)
+      }).catch((err) => {
+        reject(err)
+      })
 
-      if (body) req.write(body);
-      req.end();
-    });
-  }
-
-  protected parserResponse(
-    response: http.IncomingMessage
-  ): Promise<HTTPResponse> {
-    return new Promise((resolve, reject) => {
-      let streamDecompressed: stream.Transform | undefined = undefined;
-      switch (response.headers['content-encoding']) {
-        case 'br':
-          streamDecompressed = createBrotliDecompress();
-          response.pipe(streamDecompressed);
-          break;
-        case 'gzip':
-          streamDecompressed = createGunzip();
-          response.pipe(streamDecompressed);
-          break;
-        case 'deflate':
-          streamDecompressed = createInflate();
-          response.pipe(streamDecompressed);
-          break;
-      }
-      response.on('error', (err) => {
-        if (streamDecompressed) {
-          streamDecompressed.end();
-        }
-        reject(err);
-      });
-      response.on('close', () => {
-        if (streamDecompressed) {
-          streamDecompressed.end();
-        }
-      });
-      if (Array.isArray(response.headers.location)) {
-        response.headers.location = response.headers.location[0];
-      }
-
-      const contentTypeEncoding =
-        response.headers['content-type']?.match(/charset=[^;]+/);
-
-      let bodyStream:
-        | http.IncomingMessage
-        | stream.Transform
-        | NodeJS.ReadWriteStream = streamDecompressed || response;
-
-      let iconvStream: NodeJS.ReadWriteStream | undefined = undefined;
-      if (contentTypeEncoding) {
-        const encoding = contentTypeEncoding[0].replace(/^charset=/, '');
-
-        iconvStream = iconv.decodeStream(encoding);
-
-        bodyStream = bodyStream.pipe(iconvStream);
-      }
-      resolve({
-        bodyStream,
-        headers: response.headers,
-        statusCode: response.statusCode as number
-      });
+      //if (body) req.write(body);
+      //req.end();
     });
   }
 
