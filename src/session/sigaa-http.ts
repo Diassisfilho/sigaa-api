@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
-import { FormData } from 'formdata-node';
 import { URL } from 'url';
 import { stringify } from 'querystring';
 import { HTTPMethod } from '../sigaa-types';
@@ -13,6 +12,14 @@ export type ProgressCallback = (
   totalSize: number,
   downloadedSize?: number
 ) => void;
+
+/**
+ * @category Public
+ */
+export type FormData = {
+  [key: string]: string | any;
+  headers: Record<string, string>;
+};
 
 /**
  * @category Internal
@@ -142,7 +149,7 @@ export class SigaaHTTP implements HTTP {
   public async postMultipart(
     path: string,
     formData: FormData,
-    options?: SigaaRequestOptions
+    options?: SigaaRequestOptions,
   ): Promise<Page> {
     const url = this.session.getURL(path);
     const httpOptions = this.getRequestBasicOptions(
@@ -153,7 +160,7 @@ export class SigaaHTTP implements HTTP {
     );
 
     const buffer = await this.convertReadebleToBuffer(formData.stream);
-    return this.requestPage(url, httpOptions, buffer);
+    return this.requestPage(url, httpOptions, buffer, undefined, true);
   }
 
   /**
@@ -273,7 +280,8 @@ export class SigaaHTTP implements HTTP {
     url: URL,
     httpOptions: HTTPRequestOptions,
     requestBody?: string | Buffer,
-    options?: SigaaRequestOptions
+    options?: SigaaRequestOptions,
+    postForm?: boolean
   ): Promise<Page> {
     try {
       const sessionHttpOptions = await this.session.afterHTTPOptions(
@@ -292,18 +300,19 @@ export class SigaaHTTP implements HTTP {
         return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
       }
 
-      const { data , headers, status, request } = await this.requestHTTP(
+      const { data, headers, status, request } = await this.requestHTTP(
         httpOptions,
-        requestBody
+        requestBody,
+        postForm
       );
       const redirectedURL = new URL(request.res.responseUrl);
 
       const page = new SigaaPage({
         requestOptions: httpOptions,
         body: data.toString(),
-        url: (redirectedURL)? redirectedURL : url,
+        url: redirectedURL ? redirectedURL : url,
         headers: headers as AxiosResponseHeaders,
-        statusCode : status,
+        statusCode: status,
         requestBody
       });
       return this.session.afterSuccessfulRequest(page, options);
@@ -323,13 +332,29 @@ export class SigaaHTTP implements HTTP {
    */
   protected async requestHTTP(
     optionsHTTP: HTTPRequestOptions,
-    body?: string | Buffer
+    body?: string | Buffer,
+    postForm?: boolean
   ): Promise<AxiosResponse<any, any>> {
     return new Promise((resolve, reject) => {
-      const {hostname, path, method, headers} = optionsHTTP;
-      const baseURL = "https://"+hostname;
-      const data = (body)? body : undefined;
+      const { hostname, path, method, headers } = optionsHTTP;
+      const baseURL = 'https://' + hostname;
+      const data = body ? body : undefined;
       const url = path as string | undefined;
+
+      if (postForm) {
+        axios
+          .postForm(baseURL + url, {
+            data,
+            method,
+            headers
+          })
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }
 
       axios({
         baseURL,
@@ -337,14 +362,13 @@ export class SigaaHTTP implements HTTP {
         data,
         method,
         headers
-      }).then((response) => {
-        resolve(response)
-      }).catch((err) => {
-        reject(err)
       })
-
-      //if (body) req.write(body);
-      //req.end();
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 

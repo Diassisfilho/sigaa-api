@@ -1,6 +1,5 @@
 import { URL } from 'url';
 
-import { FormData } from 'formdata-node';
 import { Parser } from '@helpers/sigaa-parser';
 import { File, FileData } from '@resources/sigaa-file';
 import {
@@ -8,7 +7,7 @@ import {
   UpdatableResource,
   UpdatableResourceCallback
 } from '@resources/updatable-resource';
-import { HTTP } from '@session/sigaa-http';
+import { HTTP, FormData } from '@session/sigaa-http';
 import { SigaaForm, Page } from '@session/sigaa-page';
 import { CourseResourcesFactory } from '@courses/sigaa-course-resources-factory';
 import { UpdatableResourceData } from '@resources/sigaa-resource-manager';
@@ -493,16 +492,16 @@ export class SigaaCourseForum
         'SIGAA: Forum post page format is different than expected.'
       );
 
-    const formData = new FormData();
+    const formData : FormData = {headers : {}};
     for (const input of inputHiddens) {
-      const name = page.$(input).attr('name');
-      if (name) formData.set(name, page.$(input).val());
+      const name = page.$(input).attr('name') as string; 
+      formData[name] = (name) ? page.$(input).val() : "";
     }
     if (file) {
-      const name = fileInput.attr('name');
+      const name = fileInput.attr('name') as string;
       if (!name)
         throw new Error('SIGAA: Forum post page has input file without name.');
-      formData.set(name, file);
+        formData[name] = file;
     }
     if (notify) {
       const name = notifyCheckbox.attr('name');
@@ -510,15 +509,15 @@ export class SigaaCourseForum
         throw new Error(
           'SIGAA: Forum post page has notify checkbox without name.'
         );
-      formData.set(name, 'on');
+      formData[name] = 'on';
     }
-    formData.set('form:assunto', title);
-    formData.set('form:mensagem', body);
+    formData['form:assunto'] = title;
+    formData['form:mensagem'] = body;
     const sumbitName = page.$(submitButton).attr('name');
     if (!sumbitName)
       throw new Error('SIGAA: Forum post page has submit button without name.');
 
-    formData.set(sumbitName, page.$(submitButton).val());
+    formData[sumbitName] = page.$(submitButton).val();
     const responsePage = await this.http.postMultipart(
       actionURl.href,
       formData
