@@ -3,6 +3,7 @@ import { CourseFactory } from '@courses/sigaa-course-student-factory';
 import { Parser } from '@helpers/sigaa-parser';
 import { HTTP } from '@session/sigaa-http';
 import { HTTPFactory } from '@session/sigaa-http-factory';
+import URLParser from 'url-parse'
 
 import { SigaaStudentBond, StudentBond } from './sigaa-student-bond';
 import { SigaaTeacherBond, TeacherBond } from './sigaa-teacher-bond';
@@ -28,7 +29,7 @@ export interface BondFactory {
   createStudentBond(
     registration: string,
     program: string,
-    bondSwitchUrl: URL | null
+    bondSwitchUrl: URLParser<string> | null
   ): StudentBond;
 
   /**
@@ -61,7 +62,7 @@ export class SigaaBondFactory implements BondFactory {
   createStudentBond(
     registration: string,
     program: string,
-    bondSwitchUrl: URL | null
+    bondSwitchUrl: URLParser<string> | null
   ): StudentBond {
     let http: HTTP;
     if (bondSwitchUrl) {

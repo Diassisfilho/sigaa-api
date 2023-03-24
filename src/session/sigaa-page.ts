@@ -1,6 +1,5 @@
-import { URL } from 'url';
 import { decode as htmlEntitiesDecode } from 'he';
-
+import URLParser from 'url-parse'
 import { AxiosResponseHeaders } from "axios";
 import { load as $load } from 'cheerio';
 import { HTTPMethod } from '../sigaa-types';
@@ -13,7 +12,7 @@ export interface SigaaPageConstructor {
   requestBody?: string | Buffer;
   body: string;
   requestOptions: HTTPRequestOptions;
-  url: URL;
+  url: URLParser<string>;
   headers: AxiosResponseHeaders;
   statusCode: number;
 }
@@ -26,7 +25,7 @@ export interface SigaaForm {
   /**
    * The URL that should be used to submit this form.
    */
-  action: URL;
+  action: URLParser<string>;
   /**
    * List of form fields.
    */
@@ -50,7 +49,7 @@ export interface Page {
   /**
    * @param url Page URL
    */
-  readonly url: URL;
+  readonly url: URLParser<string>;
 
   /**
    * @param requestHeaders Page HTTP request headers.
@@ -148,7 +147,7 @@ export class SigaaPage implements Page {
   /**
    * @inheritdoc
    */
-  public readonly url: URL;
+  public readonly url: URLParser<string>;
 
   /**
    * @inheritdoc
@@ -254,7 +253,7 @@ export class SigaaPage implements Page {
     if (formAction === undefined)
       throw new Error('SIGAA: Form without action.');
 
-    const action = new URL(formAction, this.url);
+    const action = new URLParser(formAction, this.url);
     const postValues: Record<string, string> = {};
 
     formEl.find("input:not([type='submit'])").each((_, element) => {

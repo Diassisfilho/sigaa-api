@@ -1,7 +1,7 @@
 import { CourseFactory } from '@courses/sigaa-course-student-factory';
 import { Parser } from '@helpers/sigaa-parser';
 import { HTTP } from '@session/sigaa-http';
-
+import URLParser from 'url-parse'
 import {
   CourseStudent,
   CourseStudentData
@@ -64,7 +64,7 @@ export class SigaaStudentBond implements StudentBond {
     private activityFactory: ActivityFactory,
     readonly program: string,
     readonly registration: string,
-    readonly bondSwitchUrl: URL | null
+    readonly bondSwitchUrl: URLParser<string> | null
   ) {}
 
   readonly type = 'student';

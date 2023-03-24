@@ -1,9 +1,9 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
-import { URL } from 'url';
-import { stringify } from 'querystring';
+import URLParser from 'url-parse'
 import { HTTPMethod } from '../sigaa-types';
 import { HTTPSession } from './sigaa-http-session';
 import { Page, SigaaPage } from './sigaa-page';
+import { Buffer } from 'buffer';
 
 /**
  * @category Public
@@ -118,7 +118,7 @@ export class SigaaHTTP implements HTTP {
    */
   private getRequestBasicOptions(
     method: HTTPMethod,
-    link: URL,
+    link: URLParser<string>,
     additionalHeaders?: Record<string, string>,
     options: SigaaRequestOptions = {
       mobile: false
@@ -126,12 +126,10 @@ export class SigaaHTTP implements HTTP {
   ): HTTPRequestOptions {
     const basicOptions: HTTPRequestOptions = {
       hostname: link.hostname,
-      path: link.pathname + link.search,
-      method: method,
+      path: `${link.pathname}${link.query}`,
+      method,
       headers: {
-        'User-Agent': `SIGAA-Api/1.0 (${
-          options.mobile ? 'Android 7.0; ' : ''
-        }https://github.com/GeovaneSchmitz/sigaa-api)`,
+        'User-Agent': `SIGAA-Api/1.0 (${options.mobile ? 'Android 7.0; ' : ''}https://github.com/GeovaneSchmitz/sigaa-api)`,
         'Accept-Encoding': 'br, gzip, deflate',
         Accept: '*/*',
         'Cache-Control': 'max-age=0',
@@ -151,7 +149,7 @@ export class SigaaHTTP implements HTTP {
     formData: FormData,
     options?: SigaaRequestOptions,
   ): Promise<Page> {
-    const url = this.session.getURL(path);
+    const url = new URLParser(this.session.getURL(path).href);
     const httpOptions = this.getRequestBasicOptions(
       'POST',
       url,
@@ -222,7 +220,7 @@ export class SigaaHTTP implements HTTP {
     postValues: Record<string, string>,
     options: SigaaRequestOptions = {}
   ): Promise<Page> {
-    const url = this.session.getURL(path);
+    const url = new URLParser(this.session.getURL(path).href);
 
     const { httpOptions, body } = this.encodePostValue(
       url,
@@ -239,13 +237,28 @@ export class SigaaHTTP implements HTTP {
    * @param options
    */
   private encodePostValue(
-    url: URL,
+    url: URLParser<string>,
     postValues: Record<string, string>,
     options?: SigaaRequestOptions
   ) {
-    const body = stringify(postValues, '&', '=', {
-      encodeURIComponent: this.encodeWithRFC3986
-    });
+    // const body = stringify(postValues, '&', '=', {
+    //   encodeURIComponent: this.encodeWithRFC3986
+    // });
+    class CustomSearchParams extends URLSearchParams {
+    encodingFunction: (str: string) => string;
+
+    constructor(data: string[][] | Record<string, string> | string | CustomSearchParams, encodingFunction: (str: string) => string) {
+        super(data);
+        this.encodingFunction = encodingFunction;
+      }
+    
+      encodeURIComponent(str: string) {
+        return this.encodingFunction(str);
+      }
+    }
+
+    const body = new CustomSearchParams(postValues, this.encodeWithRFC3986).toString();
+
 
     const httpOptions = this.getRequestBasicOptions(
       'POST',
@@ -260,7 +273,7 @@ export class SigaaHTTP implements HTTP {
   }
 
   public async get(path: string, options?: SigaaRequestOptions): Promise<Page> {
-    const url = this.session.getURL(path);
+    const url = new URLParser(this.session.getURL(path).href);
     const httpOptions = this.getRequestBasicOptions(
       'GET',
       url,
@@ -277,7 +290,7 @@ export class SigaaHTTP implements HTTP {
    * @param [requestBody] body of request
    */
   private async requestPage(
-    url: URL,
+    url: URLParser<string>,
     httpOptions: HTTPRequestOptions,
     requestBody?: string | Buffer,
     options?: SigaaRequestOptions,
@@ -299,13 +312,15 @@ export class SigaaHTTP implements HTTP {
       if (pageBeforeRequest) {
         return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
       }
-
+      console.log(httpOptions) // esse console.log mostra o path das requisições, que é um no node e outro no RN
       const { data, headers, status, request } = await this.requestHTTP(
         httpOptions,
         requestBody,
         postForm
       );
-      const redirectedURL = new URL(request.res.responseUrl);
+      const responseURL = request.res? request.res.responseUrl : request._url
+      const redirectedURL = new URLParser(responseURL)   
+      
 
       const page = new SigaaPage({
         requestOptions: httpOptions,
@@ -334,7 +349,7 @@ export class SigaaHTTP implements HTTP {
     optionsHTTP: HTTPRequestOptions,
     body?: string | Buffer,
     postForm?: boolean
-  ): Promise<AxiosResponse<any, any>> {
+  ): Promise<AxiosResponse<Request>> {
     return new Promise((resolve, reject) => {
       const { hostname, path, method, headers } = optionsHTTP;
       const baseURL = 'https://' + hostname;

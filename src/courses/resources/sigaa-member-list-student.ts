@@ -1,3 +1,5 @@
+import URLParser from 'url-parse'
+
 /**
  * @category Public
  */
@@ -5,7 +7,7 @@ export interface Member {
   name: string;
   username: string;
   email: string;
-  photoURL?: URL;
+  photoURL?: URLParser<string>;
 }
 
 /**

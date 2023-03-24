@@ -1,4 +1,4 @@
-import { URL } from 'url';
+import URLParser from 'url-parse'
 import { FileData } from '@resources/sigaa-file';
 import { HTTP } from '@session/sigaa-http';
 import { SigaaForm } from '@session/sigaa-page';
@@ -157,13 +157,14 @@ export class SigaaHomework
     const page = await this.http.post(
       this._formSendHomework.action.href,
       this._formSendHomework.postValues
-    );
+    );    
 
     const path = page.$('ul.form > li > div > a').attr('href');
     if (!path) throw new Error('SIGAA: Homework has no file.');
-    const url = new URL(path, page.url);
-    const fileKey = url.searchParams.get('key');
-    const fileId = url.searchParams.get('idArquivo');
+    const url = new URLParser(path, page.url);
+    const query = url.query as {key?: string, idArquivo? : string};
+    const fileKey = query.key ;
+    const fileId = query.idArquivo;
     if (fileId == null || fileKey == null)
       throw new Error('SIGAA: File URL is invalid.');
 

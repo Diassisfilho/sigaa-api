@@ -1,5 +1,4 @@
-import { URL } from 'url';
-
+import URLParser from 'url-parse'
 import { isEqual } from 'lodash';
 import { RequestStacks } from '@helpers/sigaa-request-stack';
 import {
@@ -65,7 +64,7 @@ export interface HTTPSession {
    * Transforms a path in URL
    * @param path
    */
-  getURL(path: string): URL;
+  getURL(path: string): URLParser<string>;
 
   /**
    * It is called before the request, it may be useful to delay.
@@ -77,7 +76,7 @@ export interface HTTPSession {
    * @param options
    */
   beforeRequest(
-    link: URL,
+    link: URLParser<string>,
     httpOptions: HTTPRequestOptions,
     body?: string | Buffer,
     options?: SigaaRequestOptions
@@ -92,7 +91,7 @@ export interface HTTPSession {
    * @param options
    */
   afterHTTPOptions(
-    link: URL,
+    link: URLParser<string>,
     httpOptions: HTTPRequestOptions,
     body?: string | Buffer,
     options?: SigaaRequestOptions
@@ -166,8 +165,8 @@ export class SigaaHTTPSession implements HTTPSession {
   /**
    * @inheritdoc
    */
-  getURL(path: string): URL {
-    return new URL(path, this.url);
+  getURL(path: string): URLParser<string> {
+    return new URLParser(path, this.url);
   }
 
   /**
@@ -241,7 +240,7 @@ export class SigaaHTTPSession implements HTTPSession {
    * @inheritdoc
    */
   async afterHTTPOptions(
-    link: URL,
+    link: URLParser<string>,
     httpOptions: HTTPRequestOptions
   ): Promise<HTTPRequestOptions> {
     const cookie = this.cookiesController.getCookieHeader(
@@ -258,7 +257,7 @@ export class SigaaHTTPSession implements HTTPSession {
    * @inheritdoc
    */
   async beforeRequest(
-    url: URL,
+    url: URLParser<string>,
     httpOptions: HTTPRequestOptions,
     requestBody?: string | Buffer,
     options?: SigaaRequestOptions

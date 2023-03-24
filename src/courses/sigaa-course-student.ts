@@ -1,5 +1,4 @@
-import { URL } from 'url';
-
+import URLParser from 'url-parse'
 import { Lesson } from '@courseResources/sigaa-lesson-student';
 import { NewsData, News } from '@courseResources/sigaa-news-student';
 import { Parser } from '@helpers/sigaa-parser';
@@ -1007,7 +1006,7 @@ export class SigaaCourseStudent implements CourseStudent {
             'SIGAA: teacher profile picture without src at member page.'
           );
 
-        const photoURL = new URL(photoHREF, page.url.href);
+        const photoURL = new URLParser(photoHREF, page.url.href);
         if (!photoURL.href.includes('no_picture.png')) {
           teacher.photoURL = photoURL;
         }
@@ -1103,7 +1102,7 @@ export class SigaaCourseStudent implements CourseStudent {
               'SIGAA: student profile picture without src at member page.'
             );
 
-          const photoURL = new URL(photoHREF, page.url.href);
+          const photoURL = new URLParser(photoHREF, page.url.href);
           if (!photoURL.href.includes('no_picture.png')) {
             student.photoURL = photoURL;
           }

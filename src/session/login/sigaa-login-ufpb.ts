@@ -1,5 +1,5 @@
 import { LoginStatus } from '../../sigaa-types';
-import { URL } from 'url';
+import URLParser from 'url-parse'
 import { HTTP } from '@session/sigaa-http';
 import { Page, SigaaForm } from '@session/sigaa-page';
 import { Session } from '@session/sigaa-session';
@@ -19,7 +19,7 @@ export class SigaaLoginUFPB implements Login {
     const actionUrl = formElement.attr('action');
     if (!actionUrl) throw new Error('SIGAA: No action form on login page.');
 
-    const action = new URL(actionUrl, page.url.href);
+    const action = new URLParser(actionUrl, page.url.href);
 
     const postValues: Record<string, string> = {};
 
@@ -76,7 +76,7 @@ export class SigaaLoginUFPB implements Login {
     try {
       const page = await this.desktopLogin(username, password);
       return this.http.followAllRedirect(page);
-    } catch (error) {
+    } catch (error: any) {
       if (!retry || error.message === this.errorInvalidCredentials) {
         throw error;
       } else {
