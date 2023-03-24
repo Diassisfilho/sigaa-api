@@ -14,7 +14,7 @@
         "he": "^1.2.0",
         "iconv-lite": "^0.6.3",
         "lodash": "^4.17.20",
-        "source-map-support": "^0.5.19"
+        "url-parse": "^1.5.10"
     },
     "repository": {
         "type": "git",
@@ -49,6 +49,7 @@
         "@types/he": "^1.1.2",
         "@types/jest": "^26.0.24",
         "@types/lodash": "^4.14.172",
+        "@types/url-parse": "^1.4.8",
         "@typescript-eslint/eslint-plugin": "^4.29.0",
         "@typescript-eslint/parser": "^4.29.0",
         "babel-plugin-module-resolver": "^4.1.0",

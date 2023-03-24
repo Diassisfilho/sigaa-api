@@ -2,7 +2,7 @@ import { Parser } from '@helpers/sigaa-parser';
 import { HTTP, ProgressCallback } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
-import { URL } from 'url';
+import URLParser from 'url-parse'
 import { BondFactory, BondType } from '@bonds/sigaa-bond-factory';
 import { Page } from '@session/sigaa-page';
 import { Account } from './sigaa-account';
@@ -117,7 +117,7 @@ export class SigaaAccountUFPB implements Account {
           const url = page.$(row).find('a[href]').attr('href');
           if (!url)
             throw new Error('SIGAA: Bond switch url could not be found.');
-          const bondSwitchUrl = new URL(url, page.url);
+          const bondSwitchUrl = new URLParser(url, page.url);
 
           const program = this.parser
             .removeTagsHtml(page.$(cells[4]).html())
@@ -204,7 +204,7 @@ export class SigaaAccountUFPB implements Account {
    * Get profile picture URL.
    * @retuns Picture url or null if the user has no photo.
    */
-  async getProfilePictureURL(): Promise<URL | null> {
+  async getProfilePictureURL(): Promise<URLParser<string> | null> {
     const page = await this.http.get(
       '/sigaa/portais/discente/beta/discente.jsf'
     );
@@ -215,7 +215,7 @@ export class SigaaAccountUFPB implements Account {
     if (!pictureStyle) return null;
     const pictureUrl = (pictureStyle.match(/https?:[^")]+/) || [])[0];
     if (!pictureUrl) return null;
-    return new URL(pictureUrl, page.url);
+    return new URLParser(pictureUrl, page.url);
   }
 
   /**
@@ -292,7 +292,7 @@ export class SigaaAccountUFPB implements Account {
         'SIGAA: Form without action at change password pre page.'
       );
 
-    const preActionUrl = new URL(preAction, prePage.url.href);
+    const preActionUrl = new URLParser(preAction, prePage.url.href);
 
     const prePostValues: Record<string, string> = {};
 
@@ -312,7 +312,7 @@ export class SigaaAccountUFPB implements Account {
     const action = formElement.attr('action');
     if (!action)
       throw new Error('SIGAA: Form without action at change password page.');
-    const formAction = new URL(action, page.url.href);
+    const formAction = new URLParser(action, page.url.href);
 
     const postValues: Record<string, string> = {};
     const inputs = formElement

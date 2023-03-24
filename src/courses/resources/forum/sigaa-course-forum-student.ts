@@ -1,5 +1,4 @@
-import { URL } from 'url';
-
+import URLParser from 'url-parse'
 import { Parser } from '@helpers/sigaa-parser';
 import { File, FileData } from '@resources/sigaa-file';
 import {
@@ -233,7 +232,7 @@ export class SigaaCourseForum
     const action = formElement.attr('action');
     if (!action)
       throw new Error('SIGAA: Forum submit page has form without action.');
-    const actionURL = new URL(action, page.url.href);
+    const actionURL = new URLParser(action, page.url.href);
     const postValues: Record<string, string> = {};
     formElement
       .find("input:not([type='button'])")
@@ -474,7 +473,7 @@ export class SigaaCourseForum
     const action = formElement.attr('action');
     if (!action)
       throw new Error('SIGAA: Forum post page has form without action.');
-    const actionURl = new URL(action, page.url.href);
+    const actionURl = new URLParser(action, page.url.href);
 
     const inputHiddens = formElement
       .find('form#form input[type="hidden"]')

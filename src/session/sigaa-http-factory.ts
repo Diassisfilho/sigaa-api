@@ -3,6 +3,7 @@ import { BondController } from './sigaa-bond-controller';
 import { HTTP, SigaaHTTP } from './sigaa-http';
 import { SigaaHTTPWithBond } from './sigaa-http-with-bond';
 import { PageCacheWithBond } from './sigaa-page-cache-with-bond';
+import URLParser from 'url-parse'
 
 /**
  * @category Internal
@@ -16,7 +17,7 @@ export interface HTTPFactory {
    * Return http instance with bond
    * @param string bondId
    */
-  createHttpWithBond(bondSwitchUrl: URL): HTTP;
+  createHttpWithBond(bondSwitchUrl: URLParser<string>): HTTP;
 }
 /**
  * Class responsible for creating a new http instance
@@ -40,7 +41,7 @@ export class SigaaHTTPFactory implements HTTPFactory {
   /**
    * @inheritdoc
    */
-  createHttpWithBond(bondSwitchUrl: URL): HTTP {
+  createHttpWithBond(bondSwitchUrl: URLParser<string>): HTTP {
     return new SigaaHTTPWithBond(
       new SigaaHTTP(this.session),
       this.bondController,

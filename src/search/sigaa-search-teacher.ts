@@ -1,7 +1,7 @@
 import { Parser } from '@helpers/sigaa-parser';
 import { HTTP } from '@session/sigaa-http';
 import { Page } from '@session/sigaa-page';
-import { URL } from 'url';
+import URLParser from 'url-parse';
 import {
   TeacherResult,
   SigaaSearchTeacherResult
@@ -62,7 +62,7 @@ export class SigaaSearchTeacher {
     if (!action)
       throw new Error('SIGAA: Form with action at teacher search page.');
 
-    const url = new URL(action, page.url);
+    const url = new URLParser(action, page.url);
 
     const postValues: Record<string, string> = {};
     const inputs = formElement
@@ -96,10 +96,10 @@ export class SigaaSearchTeacher {
       const photoHREF = this.parser.removeTagsHtml(
         page.$(rowElement).find('img').attr('src')
       );
-      const pageURL = new URL(pageHREF, page.url);
+      const pageURL = new URLParser(pageHREF, page.url);
       const photoURL = photoHREF.includes('no_picture.png')
         ? undefined
-        : new URL(photoHREF, page.url);
+        : new URLParser(photoHREF, page.url);
 
       results.push(
         new SigaaSearchTeacherResult(this.http, this.parser, {

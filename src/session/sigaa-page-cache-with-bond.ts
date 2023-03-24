@@ -2,6 +2,7 @@ import { HTTPRequestOptions } from './sigaa-http';
 import { Page } from './sigaa-page';
 import { PageCache } from './sigaa-page-cache';
 import { PageCacheFactory } from './sigaa-page-cache-factory';
+import URLParser from 'url-parse'
 
 /**
  * @category Internal
@@ -10,7 +11,7 @@ export interface PageCacheWithBond extends PageCache {
   /**
    *Define the current bond, each bond has its own cache
    */
-  setCurrentBond(bondSwitchUrl: URL | null): void;
+  setCurrentBond(bondSwitchUrl: URLParser<string> | null): void;
 }
 
 /**
@@ -41,7 +42,7 @@ export class SigaaPageCacheWithBond implements PageCacheWithBond {
   /**
    * @inheritdoc
    */
-  setCurrentBond(bondSwitchURL: URL | null): void {
+  setCurrentBond(bondSwitchURL: URLParser<string> | null): void {
     const bondSwitchURLstring = bondSwitchURL ? bondSwitchURL.href : null;
     if (bondSwitchURLstring !== this.currentBond) {
       const oldCacheInstance = this.cacheInstances.get(bondSwitchURLstring);
