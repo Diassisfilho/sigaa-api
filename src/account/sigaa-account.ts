@@ -1,6 +1,6 @@
 import { ProgressCallback } from '@session/sigaa-http';
-import { URL } from 'url';
 import { BondType } from '@bonds/sigaa-bond-factory';
+import URLParser from 'url-parse'
 
 /**
  * Abstraction of account type.
@@ -39,7 +39,7 @@ export interface Account {
    * Get profile picture URL
    * @retuns Picture url or null if the user has no photo.
    */
-  getProfilePictureURL(): Promise<URL | null>;
+  getProfilePictureURL(): Promise<URLParser<string> | null>;
 
   /**
    * Ends the session

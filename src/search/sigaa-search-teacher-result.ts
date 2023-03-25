@@ -1,6 +1,6 @@
 import { Parser } from '@helpers/sigaa-parser';
 import { HTTP, ProgressCallback } from '@session/sigaa-http';
-import { URL } from 'url';
+import URLParser from 'url-parse'
 
 /**
  * @category Internal
@@ -8,8 +8,8 @@ import { URL } from 'url';
 export interface TeacherResultData {
   name: string;
   department: string;
-  photoURL?: URL;
-  pageURL: URL;
+  photoURL?: URLParser<string>;
+  pageURL: URLParser<string>;
 }
 
 /**
@@ -18,8 +18,8 @@ export interface TeacherResultData {
 export interface TeacherResult {
   readonly name: string;
   readonly department: string;
-  readonly pageURL: URL;
-  readonly profilePictureURL?: URL;
+  readonly pageURL: URLParser<string>;
+  readonly profilePictureURL?: URLParser<string>;
   /**
    * May return undefined if the teacher has no registered email
    */
@@ -39,8 +39,8 @@ export interface TeacherResult {
 export class SigaaSearchTeacherResult implements TeacherResult {
   private _name: string;
   private _department: string;
-  private _pageURL: URL;
-  private _photoURL?: URL;
+  private _pageURL: URLParser<string>;
+  private _photoURL?: URLParser<string>;
 
   constructor(
     private http: HTTP,
@@ -80,7 +80,7 @@ export class SigaaSearchTeacherResult implements TeacherResult {
     return this._name;
   }
 
-  get profilePictureURL(): URL | undefined {
+  get profilePictureURL(): URLParser<string> | undefined {
     return this._photoURL;
   }
 
@@ -88,7 +88,7 @@ export class SigaaSearchTeacherResult implements TeacherResult {
     return this._department;
   }
 
-  get pageURL(): URL {
+  get pageURL(): URLParser<string> {
     return this._pageURL;
   }
 }

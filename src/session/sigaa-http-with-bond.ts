@@ -3,6 +3,7 @@ import { Page } from './sigaa-page';
 import { HTTP, ProgressCallback, SigaaRequestOptions } from './sigaa-http';
 import { BondController } from './sigaa-bond-controller';
 import { PageCacheWithBond } from './sigaa-page-cache-with-bond';
+import URLParser from 'url-parse'
 
 /**
  * Implements sigaa bond in HTTP request class.
@@ -18,7 +19,7 @@ export class SigaaHTTPWithBond implements HTTP {
     private http: HTTP,
     private bondController: BondController,
     private pageCacheWithBond: PageCacheWithBond,
-    private bondSwitchUrl: URL | null
+    private bondSwitchUrl: URLParser<string> | null
   ) {}
 
   /**
