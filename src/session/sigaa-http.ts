@@ -312,13 +312,13 @@ export class SigaaHTTP implements HTTP {
       if (pageBeforeRequest) {
         return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
       }
-      console.log(httpOptions) // esse console.log mostra o path das requisições, que é um no node e outro no RN
+
       const { data, headers, status, request } = await this.requestHTTP(
         httpOptions,
         requestBody,
         postForm
       );
-      const responseURL = request.res? request.res.responseUrl : request._url
+      const responseURL = request.res? request.res.responseUrl : request.responseURL
       const redirectedURL = new URLParser(responseURL)   
       
 
@@ -376,7 +376,8 @@ export class SigaaHTTP implements HTTP {
         url,
         data,
         method,
-        headers
+        headers,
+        withCredentials : false
       })
         .then((response) => {
           resolve(response);
