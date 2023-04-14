@@ -637,27 +637,65 @@ export class SigaaCourseStudent implements CourseStudent {
         numOfAbsences
       });
     }
+
     const details = this.parser
       .removeTagsHtml(page.$('.botoes-show').html())
       .split('\n');
-
-    let totalAbsences, maxAbsences;
+    const descriptions = this.parser
+      .removeTagsHtml(page.$('.descricaoOperacao').html())
+      .split('\n');
+    let totalAbsences,
+      maxAbsences,
+      minPercentageOfAttendance,
+      totalAttendance,
+      totalGivenClasses,
+      totalWorkload;
 
     for (const detail of details) {
       if (detail.includes('Total de Faltas')) {
         totalAbsences = parseInt(detail.replace(/\D/gm, ''), 10);
+      } else if (detail.includes('Frequência:')) {
+        totalAttendance = parseInt(detail.replace(/\D/gm, ''), 10);
+      } else if (detail.includes('Número de Aulas Ministradas')) {
+        totalGivenClasses = parseInt(detail.replace(/\D/gm, ''), 10);
       } else if (detail.includes('Máximo de Faltas Permitido')) {
         maxAbsences = parseInt(detail.replace(/\D/gm, ''), 10);
+      } else if (
+        detail.includes('Número de Aulas definidas pela CH do Componente')
+      ) {
+        totalWorkload = parseInt(detail.replace(/\D/gm, ''), 10);
       }
     }
 
+    if (descriptions) {
+      for (const description of descriptions) {
+        if (description.includes('Tiver presença em um número de aulas')) {
+          minPercentageOfAttendance = parseInt(
+            description.replace(/\D/gm, '').slice(0, -1),
+            10
+          );
+        }
+      }
+    }
+
+    if (
+      typeof totalWorkload === 'number' &&
+      typeof minPercentageOfAttendance === 'number'
+    )
+      maxAbsences = totalWorkload * ((100 - minPercentageOfAttendance) / 100);
+    if (
+      typeof totalAttendance === 'number' &&
+      typeof totalGivenClasses === 'number'
+    )
+      totalAbsences = totalGivenClasses - totalAttendance;
     if (typeof maxAbsences !== 'number' || typeof totalAbsences !== 'number')
       throw new Error('SIGAA: Invalid absence page format.');
 
     return {
       list: absences,
       totalAbsences,
-      maxAbsences
+      maxAbsences,
+      totalWorkload
     };
   }
 
