@@ -210,7 +210,7 @@ export class SigaaLessonParser implements LessonParser {
       .toArray();
     if (attachmentElements.length !== 0) {
       for (const attachmentElement of attachmentElements) {
-        const iconElement = page.$(attachmentElement).find('img');
+        const iconElement = page.$(attachmentElement).children('img');
         const iconSrc = iconElement.attr('src');
         try {
           if (iconSrc === undefined) {
@@ -305,13 +305,18 @@ export class SigaaLessonParser implements LessonParser {
     page: Page,
     attachmentElement: cheerio.Element
   ): GenericAttachmentData {
-    const titleElement = page
+    var titleElement = page
       .$(attachmentElement)
       .find('span')
       .children()
       .first();
-    const title = this.parser.removeTagsHtml(titleElement.html());
-    const titleOnClick = titleElement.attr('onclick');
+    var title = this.parser.removeTagsHtml(titleElement.html());
+    var titleOnClick = titleElement.attr('onclick');
+    if (!titleOnClick) {
+      titleElement = page.$(attachmentElement).find('a');
+      title = this.parser.removeTagsHtml(titleElement.html());
+      titleOnClick = titleElement.attr('onclick');
+    }
     if (!titleOnClick)
       throw new Error('SIGAA: Attachment title without onclick event.');
     const form = page.parseJSFCLJS(titleOnClick);
