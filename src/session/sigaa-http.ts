@@ -312,7 +312,6 @@ export class SigaaHTTP implements HTTP {
       if (pageBeforeRequest) {
         return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
       }
-      console.log(httpOptions) // esse console.log mostra o path das requisições, que é um no node e outro no RN
       const { data, headers, status, request } = await this.requestHTTP(
         httpOptions,
         requestBody,
