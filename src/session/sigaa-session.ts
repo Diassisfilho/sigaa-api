@@ -4,7 +4,7 @@ import { LoginStatus } from '../sigaa-types';
  * The institution serves to adjust interactions with SIGAA.
  * @category Public
  */
-export type InstitutionType = 'IFSC' | 'UFPB' | 'UNILAB';
+export type InstitutionType = 'IFSC' | 'UFPB' | 'UNB' | 'UNILAB';
 
 /**
  * Sigaa session control

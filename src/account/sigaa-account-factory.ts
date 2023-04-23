@@ -7,6 +7,7 @@ import { Account } from './sigaa-account';
 import { SigaaAccountIFSC } from './sigaa-account-ifsc';
 import { SigaaAccountUFPB } from './sigaa-account-ufpb';
 import { SigaaAccountUNILAB } from './sigaa-account-unilab';
+import { SigaaAccountUNB } from './sigaa-account-unb';
 
 /**
  * Abstraction to represent the class that instantiates the account.
@@ -37,59 +38,19 @@ export class SigaaAccountFactory implements AccountFactory {
    * @param page home page of account (page after login).
    */
   async getAccount(page: Page): Promise<Account> {
-    switch (this.session.institution) {
-      case 'IFSC':
-        return new SigaaAccountIFSC(
-          page,
-          this.http,
-          this.parser,
-          this.session,
-          this.bondFactory
-        );
-      case 'UFPB':
-        return new SigaaAccountUFPB(
-          page,
-          this.http,
-          this.parser,
-          this.session,
-          this.bondFactory
-        );
-      case 'UNILAB':
-        return new SigaaAccountUNILAB(
-          page,
-          this.http,
-          this.parser,
-          this.session,
-          this.bondFactory
-        );
-      default:
-        return new SigaaAccountIFSC(
-          page,
-          this.http,
-          this.parser,
-          this.session,
-          this.bondFactory
-        );
-    }
-
-    /*
-    if (this.session.institution === 'UFPB') {
-      return new SigaaAccountUFPB(
-        page,
-        this.http,
-        this.parser,
-        this.session,
-        this.bondFactory
-      );
-    } else {
-      return new SigaaAccountIFSC(
-        page,
-        this.http,
-        this.parser,
-        this.session,
-        this.bondFactory
-      );
-    }
-    */
+    const SigaaAccountInstitution = {
+      IFSC: SigaaAccountIFSC,
+      UFPB: SigaaAccountUFPB,
+      UNB: SigaaAccountUNB,
+      UNILAB: SigaaAccountUNILAB
+    };
+    const institution = this.session.institution;
+    return new SigaaAccountInstitution[institution](
+      page,
+      this.http,
+      this.parser,
+      this.session,
+      this.bondFactory
+    );
   }
 }
