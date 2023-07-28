@@ -16,26 +16,19 @@ export function sharedReturn() {
       throw new Error('SIGAA: SharedReturn is only supported on methods.');
 
     const originalMethod = target.descriptor.value; // save a reference to the original method
-    const store = '__sharedReturn' + target.key;
-    target.descriptor.value = function (...args: any[]): any {
-      if (!this[store]) {
-        this[store] = new Map<string, WeakRef<any>>();
-      }
+    const cache = new Map<string, any>(); // create a regular JavaScript object as a cache
 
+    target.descriptor.value = function (...args: any[]): any {
       const id = args[0].id;
       if (!id) return originalMethod.apply(this, args);
 
-      const ref = this[store].get(id);
-      if (ref) {
-        const cacheInstance = ref.deref();
-
-        if (cacheInstance) {
-          return cacheInstance;
-        }
-        this[store].delete(id);
+      if (cache.has(id)) {
+        const cachedValue = cache.get(id);
+        return cachedValue;
       }
+      
       const instance = originalMethod.apply(this, args);
-      this[store].set(id, new WeakRef(instance));
+      cache.set(id, instance);
       return instance;
     };
   };
