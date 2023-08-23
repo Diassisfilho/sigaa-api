@@ -94,6 +94,11 @@ export class SigaaAccountUNILAB implements Account {
       this.pagehomeParsePromise = this.http
         .get(homepage.url.href, { noCache: true })
         .then((page) => this.parseBondPage(page));
+    } else if (homepage.url.href.includes('/sigaa/avaliacao/introDiscente.jsf')) {
+      //If it is in course avaliation page. (Bypassing the course avaliation page)
+      this.pagehomeParsePromise = this.http.get(homepage.url.origin + "/sigaa/portais/discente/discente.jsf", {
+        noCache: true
+      }).then(page => this.parseStudentHomePage(page));
     } else {
       throw new Error('SIGAA: Unknown homepage format.');
     }
