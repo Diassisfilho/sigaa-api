@@ -14,7 +14,6 @@ import { CourseResourcesManagerFactory } from './sigaa-course-resources-manager-
 import { Exam } from '@courseResources/sigaa-exam-student';
 import { Syllabus } from '@courseResources/sigaa-syllabus-student';
 import { LessonParserFactory } from './sigaa-lesson-parser-factory';
-import { SubMenuStatus } from '../sigaa-types';
 
 import {
   GradeGroup,
@@ -311,14 +310,24 @@ export class SigaaCourseStudent implements CourseStudent {
       throw new Error('SIGAA: Invalid course page status code.');
 
     let pageCourseCode: string | undefined;
+    
+    const relatorioH3 = page.$('#relatorio h3').html();
+    const linkCodigoTurma = page.$('#linkCodigoTurma').html();
+
     if (buttonLabel === 'Ver Notas') {
-      pageCourseCode = this.parser
-        .removeTagsHtml(page.$('#relatorio h3').html())
-        .split(' - ')[0];
+      if (relatorioH3) {
+        pageCourseCode = this.parser.removeTagsHtml(relatorioH3).split(' - ')[0];
+      } else if (linkCodigoTurma){
+        pageCourseCode = this.parser.removeTagsHtml(linkCodigoTurma).replace(/ -$/, '');
+      }
     } else {
-      pageCourseCode = this.parser
-        .removeTagsHtml(page.$('#linkCodigoTurma').html())
-        .replace(/ -$/, '');
+      if (linkCodigoTurma) {
+        pageCourseCode = this.parser.removeTagsHtml(linkCodigoTurma).replace(/ -$/, '');
+      }
+    }
+  
+    if (!pageCourseCode) {
+      throw new Error('SIGAA: Course code not found on the page.');
     }
 
     if (pageCourseCode !== this.code) {
@@ -336,7 +345,7 @@ export class SigaaCourseStudent implements CourseStudent {
   private async getCourseSubMenu(
     buttonLabel: string,
     retry = true
-  ): Promise<Page | SubMenuStatus> {
+  ): Promise<Page> {
     if (buttonLabel === this.currentCoursePage) {
       if (this.currentPageCache) return this.currentPageCache;
     }
@@ -368,12 +377,6 @@ export class SigaaCourseStudent implements CourseStudent {
         form.postValues
       );
 
-      if (buttonLabel === 'Ver Notas') {
-        if (
-          pageResponse.bodyDecoded.includes('Ainda não foram lançadas notas.')
-        )
-          return SubMenuStatus.NoExist;
-      }
       this.verifyIfCoursePageIsValid(pageResponse, buttonLabel);
       if (pageResponse.bodyDecoded.includes('Menu Turma Virtual')) {
         this.currentPageCache = pageResponse;
@@ -434,7 +437,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getLessons(): Promise<Lesson[]> {
     const pageLessonsOne = await this.getCourseSubMenu('Principal');
-    if (pageLessonsOne == SubMenuStatus.NoExist) return [];
 
     let onclick;
 
@@ -486,7 +488,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getFiles(): Promise<File[]> {
     const page = await this.getCourseSubMenu('Arquivos');
-    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
     const usedFilesId = [];
@@ -526,7 +527,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getForums(): Promise<CourseForum[]> {
     const page = await this.getCourseSubMenu('Fóruns');
-    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
     const usedForumIds: string[] = [];
@@ -577,7 +577,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getNews(): Promise<News[]> {
     const page = await this.getCourseSubMenu('Notícias');
-    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
     const usedNewsId = [];
@@ -615,9 +614,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getAbsence(): Promise<AbsenceList> {
     const page = await this.getCourseSubMenu('Frequência');
-    if (page === SubMenuStatus.NoExist)
-      return { maxAbsences: 0, totalAbsences: 0, list: [] };
-
     const table = page.$('.listing');
     const absences: AbsenceDay[] = [];
     const rows = table.find('tr[class]').toArray();
@@ -742,8 +738,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getQuizzes(): Promise<Quiz[]> {
     const page = await this.getCourseSubMenu('Questionários');
-    if (page === SubMenuStatus.NoExist) return [];
-
     const table = page.$('.listing');
 
     const usedQuizzesIds = [];
@@ -820,7 +814,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getWebContents(): Promise<WebContent[]> {
     const page = await this.getCourseSubMenu('Conteúdo/Página web');
-    if (page === SubMenuStatus.NoExist) return [];
 
     const table = page.$('.listing');
 
@@ -873,7 +866,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getHomeworks(): Promise<Homework[]> {
     const page = await this.getCourseSubMenu('Tarefas');
-    if (page === SubMenuStatus.NoExist) return [];
 
     const tables = page.$('.listing').toArray();
     if (!tables) return [];
@@ -975,7 +967,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getMembers(): Promise<MemberList> {
     const page = await this.getCourseSubMenu('Participantes');
-    if (page === SubMenuStatus.NoExist) return { teachers: [], students: [] };
 
     const tables = page.$('table.participantes').toArray();
     const tablesNames = page.$('fieldset').toArray();
@@ -1165,7 +1156,7 @@ export class SigaaCourseStudent implements CourseStudent {
       const grades: GradeGroup[] = [];
 
       const page = await this.getCourseSubMenu('Ver Notas', retry);
-      if (page === SubMenuStatus.NoExist) return grades;
+      if (page.bodyDecoded.includes('Ainda não foram lançadas notas.')) return grades;
 
       const getPositionByCellColSpan = (
         ths: cheerio.Cheerio,
@@ -1348,13 +1339,6 @@ export class SigaaCourseStudent implements CourseStudent {
    */
   async getSyllabus(): Promise<Syllabus> {
     const page = await this.getCourseSubMenu('Plano de Ensino');
-    if (page === SubMenuStatus.NoExist)
-      return {
-        schedule: [],
-        evaluations: [],
-        basicReferences: [],
-        supplementaryReferences: []
-      };
 
     const tables = page.$('table.listagem').toArray();
 

@@ -305,7 +305,7 @@ export class SigaaLessonParser implements LessonParser {
     page: Page,
     attachmentElement: cheerio.Element
   ): GenericAttachmentData {
-    var titleElement = page
+    let titleElement = page
       .$(attachmentElement)
       .find('span')
       .children()
