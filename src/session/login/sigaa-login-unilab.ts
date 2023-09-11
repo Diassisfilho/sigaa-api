@@ -1,9 +1,11 @@
 import { LoginStatus } from '../../sigaa-types';
 import { URL } from 'url';
 import { HTTP } from '../sigaa-http';
-import { Page, SigaaForm } from '../sigaa-page';
+//import { Page, SigaaForm } from '../sigaa-page';
 import { Session } from '../sigaa-session';
 import { Login } from './sigaa-login';
+import { UNILABPage } from '@session/page/sigaa-page-unilab';
+import { SigaaForm } from '@session/sigaa-page';
 
 /**
  * Responsible for logging in IFSC.
@@ -13,7 +15,7 @@ export class SigaaLoginUNILAB implements Login {
   constructor(protected http: HTTP, protected session: Session) {}
   readonly errorInvalidCredentials = 'SIGAA: Invalid credentials.';
 
-  protected parseLoginForm(page: Page): SigaaForm {
+  protected parseLoginForm(page: UNILABPage): SigaaForm {
     const formElement = page.$("form[name='loginForm']");
 
     const actionUrl = formElement.attr('action');
@@ -56,7 +58,7 @@ export class SigaaLoginUNILAB implements Login {
   protected async desktopLogin(
     username: string,
     password: string
-  ): Promise<Page> {
+  ): Promise<UNILABPage> {
     const { action, postValues } = await this.getLoginForm();
 
     postValues['user.login'] = username;
@@ -70,7 +72,7 @@ export class SigaaLoginUNILAB implements Login {
    * @param username
    * @param password
    */
-  async login(username: string, password: string, retry = true): Promise<Page> {
+  async login(username: string, password: string, retry = true): Promise<UNILABPage> {
     if (this.session.loginStatus === LoginStatus.Authenticated)
       throw new Error('SIGAA: This session already has a user logged in.');
     try {
@@ -85,7 +87,7 @@ export class SigaaLoginUNILAB implements Login {
     }
   }
 
-  protected async parseDesktopLoginResult(page: Page): Promise<Page> {
+  protected async parseDesktopLoginResult(page: UNILABPage): Promise<UNILABPage> {
     const accountPage = await this.http.followAllRedirect(page);
     if (accountPage.bodyDecoded.includes('Entrar no Sistema')) {
       if (accountPage.bodyDecoded.includes('Usuário e/ou senha inválidos')) {

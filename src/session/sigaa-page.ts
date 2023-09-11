@@ -7,6 +7,7 @@ import { HTTPRequestOptions } from './sigaa-http';
 import { IFSCPage, SigaaPageIFSC } from './page/sigaa-page-ifsc';
 import { SigaaPageUFPB, UFPBPage } from './page/sigaa-page-ufpb';
 import { SigaaPageUNB, UNBPage } from './page/sigaa-page-unb';
+import { SigaaPageUNILAB, UNILABPage } from './page/sigaa-page-unilab';
 
 /**
  * @category Internal
@@ -105,9 +106,9 @@ export interface CommonPage {
   readonly requestBody?: string | Buffer;
 }
 
-export type Page = CommonPage & (IFSCPage | UFPBPage | UNBPage);
+export type Page = CommonPage & (IFSCPage | UFPBPage | UNBPage | UNILABPage);
 export type SigaaPage = CommonSigaaPage &
-  (SigaaPageIFSC | SigaaPageUFPB | SigaaPageUNB);
+  (SigaaPageIFSC | SigaaPageUFPB | SigaaPageUNB | SigaaPageUNILAB);
 /**
  * Response page of sigaa.
  * @category Internal
