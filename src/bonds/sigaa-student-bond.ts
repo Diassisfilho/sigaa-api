@@ -1,7 +1,7 @@
 import { CourseFactory } from '@courses/sigaa-course-student-factory';
 import { Parser } from '@helpers/sigaa-parser';
 import { HTTP } from '@session/sigaa-http';
-
+import { URL } from 'url';
 import {
   CourseStudent,
   CourseStudentData

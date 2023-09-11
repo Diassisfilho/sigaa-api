@@ -1,4 +1,5 @@
 import { FormData } from 'formdata-node';
+import { URL } from 'url';
 import { Page } from './sigaa-page';
 import { HTTP, ProgressCallback, SigaaRequestOptions } from './sigaa-http';
 import { BondController } from './sigaa-bond-controller';

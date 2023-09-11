@@ -2,10 +2,10 @@ import { Parser } from '@helpers/sigaa-parser';
 import { HTTP, ProgressCallback } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
-import { URL } from 'url';
 import { BondFactory, BondType } from '@bonds/sigaa-bond-factory';
 import { Page } from '@session/sigaa-page';
 import { Account } from './sigaa-account';
+import { URL } from 'url';
 
 /**
  * Responsible for representing the user account.
@@ -93,6 +93,10 @@ export class SigaaAccountUNB implements Account {
     ) {
       this.pagehomeParsePromise = this.http
         .get(homepage.url.href, { noCache: true })
+        .then((page) => this.parseBondPage(page));
+    } else if (homepage.url.href.includes('/sigaa/telaAvisoLogon.jsf')) {
+      this.pagehomeParsePromise = this.http
+        .get('/sigaa/vinculos.jsf')
         .then((page) => this.parseBondPage(page));
     } else {
       throw new Error('SIGAA: Unknown homepage format.');

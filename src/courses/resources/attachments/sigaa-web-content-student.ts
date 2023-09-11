@@ -34,7 +34,8 @@ export interface WebContent extends UpdatableResource<WebContentData> {
  */
 export class SigaaWebContent
   extends AbstractUpdatableResource
-  implements WebContent {
+  implements WebContent
+{
   readonly type = 'webcontent';
 
   private _title!: string;

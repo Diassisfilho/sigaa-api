@@ -1,7 +1,6 @@
-import { URL } from 'url';
-
 import { isEqual } from 'lodash';
 import { RequestStacks } from '@helpers/sigaa-request-stack';
+import { URL } from 'url';
 import {
   HTTPRequestOptions,
   ProgressCallback,
@@ -11,12 +10,14 @@ import { Page, SigaaPage } from './sigaa-page';
 import { PageCache } from './sigaa-page-cache';
 import { CookiesController } from './sigaa-cookies-controller';
 import { RequestStackController } from '../helpers/sigaa-request-stack';
+import { InstitutionController } from './sigaa-institution-controller';
 
 /**
  * Manage a http session
  * @category Internal
  */
 export interface HTTPSession {
+  institutionController: InstitutionController;
   /**
    * if returns string the download is suspended
    * @param url
@@ -128,11 +129,10 @@ export interface RequestPromiseTracker {
  */
 export class SigaaHTTPSession implements HTTPSession {
   /**
-   * @param url base of all request, example: https://sigaa.ifsc.edu.br
    */
 
   constructor(
-    public url: string,
+    public institutionController: InstitutionController,
     private cookiesController: CookiesController,
     private pageCache: PageCache,
     private requestStack: RequestStackController<Request, Page>
@@ -158,7 +158,9 @@ export class SigaaHTTPSession implements HTTPSession {
   }
 
   get requestStacks(): RequestStacks<Request, Page> {
-    return this.requestStack.getStacksByDomain(this.url);
+    return this.requestStack.getStacksByDomain(
+      this.institutionController.url.href
+    );
   }
 
   private requestPromises: RequestPromiseTracker[] = [];
@@ -167,7 +169,7 @@ export class SigaaHTTPSession implements HTTPSession {
    * @inheritdoc
    */
   getURL(path: string): URL {
-    return new URL(path, this.url);
+    return new URL(path, this.institutionController.url.href);
   }
 
   /**
