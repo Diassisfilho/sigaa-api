@@ -94,11 +94,22 @@ export class SigaaAccountUNILAB implements Account {
       this.pagehomeParsePromise = this.http
         .get(homepage.url.href, { noCache: true })
         .then((page) => this.parseBondPage(page));
-    } else if (homepage.url.href.includes('/sigaa/avaliacao/introDiscente.jsf')) {
+    } else if (
+      homepage.url.href.includes('/sigaa/avaliacao/introDiscente.jsf') ||
+      homepage.url.href.includes('/sigaa/telaAvisoCpa.jsf') ||
+      homepage.url.href.includes('/sigaa/telaAvisoLogon.jsf')
+    ) {
       //If it is in course avaliation page. (Bypassing the course avaliation page)
-      this.pagehomeParsePromise = this.http.get(homepage.url.origin + "/sigaa/portais/discente/discente.jsf", {
-        noCache: true
-      }).then(page => this.parseStudentHomePage(page));
+      this.pagehomeParsePromise = this.http
+        .get(homepage.url.origin + '/sigaa/verPortalDiscente.do', {
+          noCache: true
+        })
+        .then((page) => {
+          return this.http.followAllRedirect(page);
+        })
+        .then((page) => {
+          this.parseHomepage(page);
+        });
     } else {
       throw new Error('SIGAA: Unknown homepage format.');
     }
