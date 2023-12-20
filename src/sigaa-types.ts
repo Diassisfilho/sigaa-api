@@ -8,14 +8,6 @@ export enum LoginStatus {
 }
 
 /**
- * Grade SubMenus Status
- * @category Public
- */
-export enum SubMenuStatus {
-  NoExist
-}
-
-/**
  * @category Internal
  */
 export type HTTPMethod = 'POST' | 'GET';

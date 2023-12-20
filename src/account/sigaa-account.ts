@@ -1,6 +1,9 @@
-import { ProgressCallback } from '@session/sigaa-http';
 import { BondType } from '@bonds/sigaa-bond-factory';
 import URLParser from 'url-parse'
+import { SigaaAccountIFSC } from './sigaa-account-ifsc';
+import { SigaaAccountUFPB } from './sigaa-account-ufpb';
+import { SigaaAccountUNB } from './sigaa-account-unb';
+import { SigaaAccountUNILAB } from './sigaa-account-unilab';
 
 /**
  * Abstraction of account type.
@@ -55,3 +58,11 @@ export interface Account {
    */
   changePassword(oldPassword: string, newPassword: string): Promise<void>;
 }
+
+export type SigaaAccountInstitution =
+  | SigaaAccountIFSC
+  | SigaaAccountUFPB
+  | SigaaAccountUNB
+  | SigaaAccountUNILAB;
+
+export type CommonSigaaAccount = Account & SigaaAccountInstitution;

@@ -1,5 +1,5 @@
 import { Parser } from '@helpers/sigaa-parser';
-import { HTTP, ProgressCallback } from '@session/sigaa-http';
+import { HTTP } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
 import URLParser from 'url-parse'

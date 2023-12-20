@@ -1,27 +1,26 @@
 import { LoginStatus } from '../../sigaa-types';
-import URLParser from 'url-parse'
+import URLparse from 'url-parse';
 import { HTTP } from '../sigaa-http';
-//import { Page, SigaaForm } from '../sigaa-page';
 import { Session } from '../sigaa-session';
 import { Login } from './sigaa-login';
-import { UNILABPage } from '@session/page/sigaa-page-unilab';
+import { UNBPage } from '@session/page/sigaa-page-unb';
 import { SigaaForm } from '@session/sigaa-page';
 
 /**
- * Responsible for logging in IFSC.
+ * Responsible for logging in UNB.
  * @category Internal
  */
-export class SigaaLoginUNILAB implements Login {
+export class SigaaLoginUNB implements Login {
   constructor(protected http: HTTP, protected session: Session) {}
   readonly errorInvalidCredentials = 'SIGAA: Invalid credentials.';
 
-  protected parseLoginForm(page: UNILABPage): SigaaForm {
+  protected parseLoginForm(page: UNBPage): SigaaForm {
     const formElement = page.$("form[name='loginForm']");
 
     const actionUrl = formElement.attr('action');
     if (!actionUrl) throw new Error('SIGAA: No action form on login page.');
 
-    const action = new URLParser(actionUrl, page.url.href);
+    const action = new URLparse(actionUrl, page.url.href);
 
     const postValues: Record<string, string> = {};
 
@@ -58,7 +57,7 @@ export class SigaaLoginUNILAB implements Login {
   protected async desktopLogin(
     username: string,
     password: string
-  ): Promise<UNILABPage> {
+  ): Promise<UNBPage> {
     const { action, postValues } = await this.getLoginForm();
 
     postValues['user.login'] = username;
@@ -72,13 +71,17 @@ export class SigaaLoginUNILAB implements Login {
    * @param username
    * @param password
    */
-  async login(username: string, password: string, retry = true): Promise<UNILABPage> {
+  async login(
+    username: string,
+    password: string,
+    retry = true
+  ): Promise<UNBPage> {
     if (this.session.loginStatus === LoginStatus.Authenticated)
       throw new Error('SIGAA: This session already has a user logged in.');
     try {
       const page = await this.desktopLogin(username, password);
       return this.http.followAllRedirect(page);
-    } catch (error: any) {
+    } catch (error) {
       if (!retry || error.message === this.errorInvalidCredentials) {
         throw error;
       } else {
@@ -87,7 +90,7 @@ export class SigaaLoginUNILAB implements Login {
     }
   }
 
-  protected async parseDesktopLoginResult(page: UNILABPage): Promise<UNILABPage> {
+  protected async parseDesktopLoginResult(page: UNBPage): Promise<UNBPage> {
     const accountPage = await this.http.followAllRedirect(page);
     if (accountPage.bodyDecoded.includes('Entrar no Sistema')) {
       if (accountPage.bodyDecoded.includes('Usuário e/ou senha inválidos')) {

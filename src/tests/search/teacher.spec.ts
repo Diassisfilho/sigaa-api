@@ -4,7 +4,8 @@ import { Sigaa } from '../../sigaa-main';
 
 test('if sigaa search loads campus list', async () => {
   const sigaa = new Sigaa({
-    url: 'https://sigaa.ifsc.edu.br'
+    url: 'https://sigaa.ifsc.edu.br',
+    institution: "IFSC"
   });
   const list = await sigaa.search.teacher().getCampusList();
   for (const campus of list) {
@@ -19,7 +20,8 @@ test('if sigaa search loads campus list', async () => {
 
 test('if sigaa search returns results', async () => {
   const sigaa = new Sigaa({
-    url: 'https://sigaa.ifsc.edu.br'
+    url: 'https://sigaa.ifsc.edu.br',
+    institution: "IFSC"
   });
   const list = await sigaa.search.teacher().search('José');
   for (const teacher of list) {
@@ -31,7 +33,8 @@ test('if sigaa search returns results', async () => {
 
 test('if sigaa search returns emails', async () => {
   const sigaa = new Sigaa({
-    url: 'https://sigaa.ifsc.edu.br'
+    url: 'https://sigaa.ifsc.edu.br',
+    institution: "IFSC"
   });
   const list = (await sigaa.search.teacher().search('José')).slice(0, 5);
   expect(list.length).toBe(5);
@@ -54,7 +57,8 @@ test('if sigaa search returns emails', async () => {
 
 test('if sigaa search returns profile picture url', async () => {
   const sigaa = new Sigaa({
-    url: 'https://sigaa.ifsc.edu.br'
+    url: 'https://sigaa.ifsc.edu.br',
+    institution: 'IFSC'
   });
   const list = (await sigaa.search.teacher().search('José')).slice(0, 10);
   for (const teacher of list) {

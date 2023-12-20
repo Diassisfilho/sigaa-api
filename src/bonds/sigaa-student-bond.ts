@@ -122,7 +122,7 @@ export class SigaaStudentBond implements StudentBond {
       button: null
     };
 
-    var tableHeaderCellElements = table.find('thead > tr td').toArray();
+    let tableHeaderCellElements = table.find('thead > tr td').toArray();
     if (!tableHeaderCellElements.length)
       tableHeaderCellElements = table.find('thead > tr th').toArray();
 

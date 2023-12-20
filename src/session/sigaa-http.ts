@@ -2,8 +2,13 @@ import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import URLParser from 'url-parse'
 import { HTTPMethod } from '../sigaa-types';
 import { HTTPSession } from './sigaa-http-session';
-import { Page, SigaaPage } from './sigaa-page';
 import { Buffer } from 'buffer';
+import { Page } from './sigaa-page';
+import { SigaaPageInstitutionMap } from './sigaa-institution-controller';
+import { SigaaPageIFSC } from './page/sigaa-page-ifsc';
+import { SigaaPageUFPB } from './page/sigaa-page-ufpb';
+import { SigaaPageUNB } from './page/sigaa-page-unb';
+import { SigaaPageUNILAB } from './page/sigaa-page-unilab';
 
 /**
  * @category Public
@@ -99,13 +104,13 @@ export interface HTTP {
  * @category Internal
  */
 export class SigaaHTTP implements HTTP {
-  constructor(private session: HTTPSession) {}
+  constructor(private httpSession: HTTPSession) {}
 
   /**
    * @inheritdoc
    */
   closeSession(): void {
-    this.session.close();
+    this.httpSession.close();
   }
   /**
    * Create object Options for https.request
@@ -149,7 +154,7 @@ export class SigaaHTTP implements HTTP {
     formData: FormData,
     options?: SigaaRequestOptions,
   ): Promise<Page> {
-    const url = new URLParser(this.session.getURL(path).href);
+    const url = this.httpSession.getURL(path);
     const httpOptions = this.getRequestBasicOptions(
       'POST',
       url,
@@ -220,7 +225,7 @@ export class SigaaHTTP implements HTTP {
     postValues: Record<string, string>,
     options: SigaaRequestOptions = {}
   ): Promise<Page> {
-    const url = new URLParser(this.session.getURL(path).href);
+    const url = this.httpSession.getURL(path);
 
     const { httpOptions, body } = this.encodePostValue(
       url,
@@ -273,7 +278,7 @@ export class SigaaHTTP implements HTTP {
   }
 
   public async get(path: string, options?: SigaaRequestOptions): Promise<Page> {
-    const url = new URLParser(this.session.getURL(path).href);
+    const url = this.httpSession.getURL(path);
     const httpOptions = this.getRequestBasicOptions(
       'GET',
       url,
@@ -297,20 +302,23 @@ export class SigaaHTTP implements HTTP {
     postForm?: boolean
   ): Promise<Page> {
     try {
-      const sessionHttpOptions = await this.session.afterHTTPOptions(
+      const sessionHttpOptions = await this.httpSession.afterHTTPOptions(
         url,
         httpOptions,
         requestBody,
         options
       );
-      const pageBeforeRequest = await this.session.beforeRequest(
+      const pageBeforeRequest = await this.httpSession.beforeRequest(
         url,
         sessionHttpOptions,
         requestBody,
         options
       );
       if (pageBeforeRequest) {
-        return this.session.afterSuccessfulRequest(pageBeforeRequest, options);
+        return this.httpSession.afterSuccessfulRequest(
+          pageBeforeRequest,
+          options
+        );
       }
       const { data, headers, status, request } = await this.requestHTTP(
         httpOptions,
@@ -321,7 +329,16 @@ export class SigaaHTTP implements HTTP {
       const responseURL = request.res? request.res.responseUrl : request.responseURL
       const redirectedURL = new URLParser(responseURL)      
 
-      const page = new SigaaPage({
+      const SigaaPageInstitution: SigaaPageInstitutionMap = {
+        IFSC: SigaaPageIFSC,
+        UFPB: SigaaPageUFPB,
+        UNB: SigaaPageUNB,
+        UNILAB: SigaaPageUNILAB
+      };
+
+      const page = new SigaaPageInstitution[
+        this.httpSession.institutionController.institution
+      ]({
         requestOptions: httpOptions,
         body: data.toString(),
         url: redirectedURL ? redirectedURL : url,
@@ -329,9 +346,10 @@ export class SigaaHTTP implements HTTP {
         statusCode: status,
         requestBody
       });
-      return this.session.afterSuccessfulRequest(page, options);
+      
+      return this.httpSession.afterSuccessfulRequest(page, options);
     } catch (err) {
-      return this.session.afterUnsuccessfulRequest(
+      return this.httpSession.afterUnsuccessfulRequest(
         err as Error,
         httpOptions,
         requestBody

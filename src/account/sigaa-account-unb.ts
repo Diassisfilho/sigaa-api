@@ -1,17 +1,17 @@
 import { Parser } from '@helpers/sigaa-parser';
-import { HTTP } from '@session/sigaa-http';
+import { HTTP, ProgressCallback } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
-import URLParser from 'url-parse'
 import { BondFactory, BondType } from '@bonds/sigaa-bond-factory';
 import { Page } from '@session/sigaa-page';
 import { Account } from './sigaa-account';
+import URLparse from 'url-parse';
 
 /**
  * Responsible for representing the user account.
  * @category Internal
  */
-export class SigaaAccountUNILAB implements Account {
+export class SigaaAccountUNB implements Account {
   /**
    * @param homepage homepage (page after login) of user.
    */
@@ -94,22 +94,10 @@ export class SigaaAccountUNILAB implements Account {
       this.pagehomeParsePromise = this.http
         .get(homepage.url.href, { noCache: true })
         .then((page) => this.parseBondPage(page));
-    } else if (
-      homepage.url.href.includes('/sigaa/avaliacao/introDiscente.jsf') ||
-      homepage.url.href.includes('/sigaa/telaAvisoCpa.jsf') ||
-      homepage.url.href.includes('/sigaa/telaAvisoLogon.jsf')
-    ) {
-      //If it is in course avaliation page. (Bypassing the course avaliation page)
+    } else if (homepage.url.href.includes('/sigaa/telaAvisoLogon.jsf')) {
       this.pagehomeParsePromise = this.http
-        .get(homepage.url.origin + '/sigaa/verPortalDiscente.do', {
-          noCache: true
-        })
-        .then((page) => {
-          return this.http.followAllRedirect(page);
-        })
-        .then((page) => {
-          this.parseHomepage(page);
-        });
+        .get('/sigaa/vinculos.jsf')
+        .then((page) => this.parseBondPage(page));
     } else {
       throw new Error('SIGAA: Unknown homepage format.');
     }
@@ -139,7 +127,7 @@ export class SigaaAccountUNILAB implements Account {
           const url = page.$(row).find('a[href]').attr('href');
           if (!url)
             throw new Error('SIGAA: Bond switch url could not be found.');
-          const bondSwitchUrl = new URLParser(url, page.url);
+          const bondSwitchUrl = new URLparse(url, page.url);
 
           const program = this.parser
             .removeTagsHtml(page.$(cells[4]).html())
@@ -227,7 +215,7 @@ export class SigaaAccountUNILAB implements Account {
     if (!program) throw new Error('SIGAA: Student bond program not found.');
 
     if (!status) throw new Error('SIGAA: Student bond status not found.');
-    if (status === 'ATIVO' || status === 'INVATIVO')
+    if (status === 'CURSANDO' || status === 'CONCLUINTE')
       this.activeBonds.push(
         this.bondFactory.createStudentBond(registration, program, null)
       );
@@ -259,7 +247,7 @@ export class SigaaAccountUNILAB implements Account {
    * Get profile picture URL.
    * @retuns Picture url or null if the user has no photo.
    */
-  async getProfilePictureURL(): Promise<URLParser<string> | null> {
+  async getProfilePictureURL(): Promise<URLparse<string> | null> {
     const page = await this.http.get('/sigaa/portais/discente/discente.jsf');
 
     const pictureElement = page.$('div[class="foto"] img');
@@ -267,7 +255,7 @@ export class SigaaAccountUNILAB implements Account {
     const pictureSrc = pictureElement.attr('src');
     if (!pictureSrc || pictureSrc.includes('/sigaa/img/no_picture.png'))
       return null;
-    return new URLParser(pictureSrc, page.url);
+    return new URLparse(pictureSrc, page.url);
   }
 
   /**
@@ -305,24 +293,22 @@ export class SigaaAccountUNILAB implements Account {
           const buttonOnClick = page.$(button).attr('onclick');
           if (buttonOnClick) {
             const form = page.parseJSFCLJS(buttonOnClick);
-            const _page = await this.http.post(
+            const myPersonalDataPage = await this.http.post(
               form.action.href,
               form.postValues
             );
-            const myPersonalDataPage = await this.http.followAllRedirect(_page);
-            const InputElement = myPersonalDataPage
-              .$('table tbody') // tr td[colspan="3"]')
-              .find("input[name='formDiscente:txtEmail']");
-
-            const email = InputElement.attr('value');
-            if (!email)
-              throw new Error('SIGAA: No e-mail on discente data page');
-
+            const rows = myPersonalDataPage
+              .$('td[colspan="3"] table tbody tr')
+              .toArray();
             this._emails = [];
-            this._emails.push(email);
+            for (const row of rows) {
+              const email = this.parser.removeTagsHtml(page.$(row).html());
+              this._emails.push(email);
+            }
           }
+
+          break;
         }
-        break;
       }
       if (this._emails) return this._emails;
       return [];
@@ -361,7 +347,7 @@ export class SigaaAccountUNILAB implements Account {
         'SIGAA: Form without action at change password pre page.'
       );
 
-    const preActionUrl = new URLParser(preAction, prePage.url.href);
+    const preActionUrl = new URL(preAction, prePage.url.href);
 
     const prePostValues: Record<string, string> = {};
 
@@ -381,7 +367,7 @@ export class SigaaAccountUNILAB implements Account {
     const action = formElement.attr('action');
     if (!action)
       throw new Error('SIGAA: Form without action at change password page.');
-    const formAction = new URLParser(action, page.url.href);
+    const formAction = new URL(action, page.url.href);
 
     const postValues: Record<string, string> = {};
     const inputs = formElement

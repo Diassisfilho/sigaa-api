@@ -2,8 +2,12 @@ import { decode as htmlEntitiesDecode } from 'he';
 import URLParser from 'url-parse'
 import { AxiosResponseHeaders } from "axios";
 import { load as $load } from 'cheerio';
-import { HTTPMethod } from '../sigaa-types';
+import { HTTPMethod } from 'src/sigaa-types';
 import { HTTPRequestOptions } from './sigaa-http';
+import { IFSCPage, SigaaPageIFSC } from './page/sigaa-page-ifsc';
+import { SigaaPageUFPB, UFPBPage } from './page/sigaa-page-ufpb';
+import { SigaaPageUNB, UNBPage } from './page/sigaa-page-unb';
+import { SigaaPageUNILAB, UNILABPage } from './page/sigaa-page-unilab';
 
 /**
  * @category Internal
@@ -35,7 +39,7 @@ export interface SigaaForm {
 /**
  * @category Internal
  */
-export interface Page {
+export interface CommonPage {
   /**
    * @param method Page HTTP request method. ex: POST, GET.
    */
@@ -100,23 +104,16 @@ export interface Page {
    * Only if request method is POST.
    */
   readonly requestBody?: string | Buffer;
-
-  /**
-   * Extracts the javascript function JSFCLJS from the page,
-   * this function on the page redirects the user to another
-   * page using the POST method, often this function is in
-   * the onclick attribute in some element.
-   * @param javaScriptCode
-   * @returns Object with URL action and POST values equivalent to function
-   */
-  parseJSFCLJS(javaScriptCode: string): SigaaForm;
 }
 
+export type Page = CommonPage & (IFSCPage | UFPBPage | UNBPage | UNILABPage);
+export type SigaaPage = CommonSigaaPage &
+  (SigaaPageIFSC | SigaaPageUFPB | SigaaPageUNB | SigaaPageUNILAB);
 /**
  * Response page of sigaa.
  * @category Internal
  */
-export class SigaaPage implements Page {
+export abstract class CommonSigaaPage implements CommonPage {
   constructor(options: SigaaPageConstructor) {
     this.requestOptions = options.requestOptions;
     this.requestBody = options.requestBody;
@@ -230,51 +227,5 @@ export class SigaaPage implements Page {
       }
     }
     return this._viewState;
-  }
-
-  /**
-   * @inheritdoc
-   */
-  parseJSFCLJS(javaScriptCode: string): SigaaForm {
-    if (!javaScriptCode.includes('getElementById'))
-      throw new Error('SIGAA: Form not found.');
-
-    const formQuery = javaScriptCode.replace(
-      /if([\S\s]*?)getElementById\('|'([\S\s]*?)false/gm,
-      ''
-    );
-
-    const formEl = this.$(`#${formQuery}`);
-    if (!formEl) {
-      throw new Error('SIGAA: Form not found.');
-    }
-
-    const formAction = formEl.attr('action');
-    if (formAction === undefined)
-      throw new Error('SIGAA: Form without action.');
-
-    const action = new URLParser(formAction, this.url);
-    const postValues: Record<string, string> = {};
-
-    formEl.find("input:not([type='submit'])").each((_, element) => {
-      const name = this.$(element).attr('name');
-      const value = this.$(element).val();
-      if (name !== undefined) {
-        postValues[name] = value;
-      }
-    });
-
-    const postValuesString = `{${javaScriptCode
-      .replace(/if([\S\s]*?),{|},([\S\s]*?)false/gm, '')
-      .replace(/"/gm, '\\"')
-      .replace(/'/gm, '"')}}`;
-
-    return {
-      action,
-      postValues: {
-        ...postValues,
-        ...JSON.parse(postValuesString)
-      }
-    };
   }
 }

@@ -26,7 +26,7 @@ export interface HTTPFactory {
  */
 export class SigaaHTTPFactory implements HTTPFactory {
   constructor(
-    private session: HTTPSession,
+    private httpSession: HTTPSession,
     private pageCacheWithBond: PageCacheWithBond,
     private bondController: BondController
   ) {}
@@ -35,7 +35,7 @@ export class SigaaHTTPFactory implements HTTPFactory {
    * @inheritdoc
    */
   createHttp(): HTTP {
-    return new SigaaHTTP(this.session);
+    return new SigaaHTTP(this.httpSession);
   }
 
   /**
@@ -43,7 +43,7 @@ export class SigaaHTTPFactory implements HTTPFactory {
    */
   createHttpWithBond(bondSwitchUrl: URLParser<string>): HTTP {
     return new SigaaHTTPWithBond(
-      new SigaaHTTP(this.session),
+      new SigaaHTTP(this.httpSession),
       this.bondController,
       this.pageCacheWithBond,
       bondSwitchUrl
