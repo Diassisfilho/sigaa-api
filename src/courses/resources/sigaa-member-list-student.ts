@@ -24,7 +24,7 @@ export interface Teacher extends Member {
 export interface Student extends Member {
   registration: string;
   program: string;
-  registrationDate: Date;
+  registrationDate?: Date;
 }
 
 /**
