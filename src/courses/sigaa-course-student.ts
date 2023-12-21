@@ -1101,7 +1101,6 @@ export class SigaaCourseStudent implements CourseStudent {
           if (
             !username ||
             !email ||
-            !registrationDate ||
             !registration ||
             !program
           )
