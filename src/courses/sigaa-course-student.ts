@@ -308,24 +308,21 @@ export class SigaaCourseStudent implements CourseStudent {
       throw new Error('SIGAA: Invalid course page status code.');
 
     let pageCourseCode: string | undefined;
-    
-    const relatorioH3 = page.$('#relatorio h3').html();
-    const linkCodigoTurma = page.$('#linkCodigoTurma').html();
 
     if (buttonLabel === 'Ver Notas') {
-      if (relatorioH3) {
-        pageCourseCode = this.parser.removeTagsHtml(relatorioH3).split(' - ')[0];
-      } else if (linkCodigoTurma){
-        pageCourseCode = this.parser.removeTagsHtml(linkCodigoTurma).replace(/ -$/, '');
+      if (page.bodyDecoded.includes('Ainda não foram')) {
+        pageCourseCode = this.parser
+          .removeTagsHtml(page.$('#linkCodigoTurma').html())
+          .replace(/ -$/, '');
+      } else {
+        pageCourseCode = this.parser
+          .removeTagsHtml(page.$('#relatorio h3').html())
+          .split(' - ')[0];
       }
     } else {
-      if (linkCodigoTurma) {
-        pageCourseCode = this.parser.removeTagsHtml(linkCodigoTurma).replace(/ -$/, '');
-      }
-    }
-  
-    if (!pageCourseCode) {
-      throw new Error('SIGAA: Course code not found on the page.');
+      pageCourseCode = this.parser
+        .removeTagsHtml(page.$('#linkCodigoTurma').html())
+        .replace(/ -$/, '');
     }
 
     if (pageCourseCode !== this.code) {
@@ -1098,12 +1095,7 @@ export class SigaaCourseStudent implements CourseStudent {
             }
           }
 
-          if (
-            !username ||
-            !email ||
-            !registration ||
-            !program
-          )
+          if (!username || !email || !registration || !program)
             throw new Error('SIGAA: Invalid student format at member page.');
 
           const name = this.parser.removeTagsHtml(
@@ -1153,7 +1145,8 @@ export class SigaaCourseStudent implements CourseStudent {
       const grades: GradeGroup[] = [];
 
       const page = await this.getCourseSubMenu('Ver Notas', retry);
-      if (page.bodyDecoded.includes('Ainda não foram lançadas notas.')) return grades;
+      if (page.bodyDecoded.includes('Ainda não foram lançadas notas.'))
+        return grades;
 
       const getPositionByCellColSpan = (
         ths: cheerio.Cheerio,
