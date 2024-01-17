@@ -416,11 +416,15 @@ export class SigaaLessonParser implements LessonParser {
       title = title.replace(/\(Link Externo\)$/g, '');
       src = href;
     } else {
-      const titleElement = page
-        .$(attachmentElement)
-        .find('span[id] > span[id]');
+      let titleElement = page.$(attachmentElement).find('span[id] > span[id]');
+      if (!titleElement) {
+        titleElement = page.$(attachmentElement).find('span[id] > span[id] h1');
+      }
       title = this.parser.removeTagsHtml(titleElement.html());
-      const srcIframe = page.$(attachmentElement).find('iframe').attr('src');
+      let srcIframe = page.$(attachmentElement).find('iframe').attr('src');
+      if (!srcIframe) {
+        srcIframe = page.$(attachmentElement).find('embed').attr('src');
+      }
       if (!srcIframe) throw new Error('SIGAA: Video iframe without url.');
       src = srcIframe;
     }
