@@ -50,6 +50,7 @@ export interface CourseStudentData {
   numberOfStudents: number;
   period: string;
   schedule: string;
+  classLocal?: string;
   form: SigaaForm;
 }
 
@@ -83,6 +84,13 @@ export interface CourseStudent {
    * Horário das aulas.
    */
   readonly schedule: string;
+
+  /**
+   * Course class local.
+   *
+   * Local das aulas.
+   */
+  readonly classLocal: string | undefined;
 
   /**
    * Number of students, is 0 if the course of the period is not the current one.
@@ -189,6 +197,11 @@ export class SigaaCourseStudent implements CourseStudent {
   /**
    * @inheritdoc
    */
+  readonly classLocal;
+
+  /**
+   * @inheritdoc
+   */
   readonly id;
 
   /**
@@ -217,6 +230,7 @@ export class SigaaCourseStudent implements CourseStudent {
     this.numberOfStudents = courseData.numberOfStudents;
     this.period = courseData.period;
     this.schedule = courseData.schedule;
+    this.classLocal = courseData.classLocal;
     this.form = courseData.form;
 
     this.resources = resourcesManagerFactory.createCourseResourcesManager(
@@ -310,7 +324,7 @@ export class SigaaCourseStudent implements CourseStudent {
     let pageCourseCode: string | undefined;
 
     if (buttonLabel === 'Ver Notas') {
-      if (page.bodyDecoded.includes('Ainda não foram')) {
+      if (page.bodyDecoded.includes('Ainda não foram lançadas notas.')) {
         pageCourseCode = this.parser
           .removeTagsHtml(page.$('#linkCodigoTurma').html())
           .replace(/ -$/, '');
