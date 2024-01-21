@@ -29,6 +29,8 @@ export interface StudentBond {
    * @param allPeriods if true, all courses will be returned; otherwise, only current courses.
    * @returns Promise with array of courses.
    */
+  getCoursesLocal(): Promise<Record<string, string>[]>;
+
   getCourses(allPeriods?: boolean): Promise<CourseStudent[]>;
 
   getActivities(): Promise<Activity[]>;
@@ -69,6 +71,84 @@ export class SigaaStudentBond implements StudentBond {
 
   readonly type = 'student';
   private _currentPeriod?: string;
+
+  async getCoursesLocal(): Promise<Record<string, string>[]> {
+    const frontPage = await this.http.get(
+      '/sigaa/portais/discente/discente.jsf'
+    );
+
+    const coursesLocal = [];
+
+    const table = frontPage.$('#turmas-portal table:nth-child(3)');
+    if (table.length === 0) return [];
+
+    const rows = table.find('tbody > tr').toArray();
+
+    const tableColumnIndexs: Record<string, null | number> = {
+      title: null,
+      classLocal: null,
+      schedule: null
+    };
+
+    let tableHeaderCellElements = table.find('thead > tr td').toArray();
+    if (!tableHeaderCellElements.length)
+      tableHeaderCellElements = table.find('thead > tr th').toArray();
+
+    for (let column = 0; column < tableHeaderCellElements.length; column++) {
+      const cellContent = this.parser.removeTagsHtml(
+        frontPage.$(tableHeaderCellElements[column]).html()
+      );
+      switch (cellContent) {
+        case 'Componente Curricular':
+          tableColumnIndexs.title = column;
+          break;
+        case 'Local':
+          tableColumnIndexs.classLocal = column;
+          break;
+        case 'Horário':
+          tableColumnIndexs.schedule = column;
+          break;
+      }
+    }
+
+    if (tableColumnIndexs.title == null) {
+      throw new Error(
+        'SIGAA: Invalid courses table, could not find the column with class titles.'
+      );
+    }
+    if (tableColumnIndexs.classLocal == null) {
+      throw new Error(
+        'SIGAA: Invalid courses table, could not find the column with class local.'
+      );
+    }
+    if (tableColumnIndexs.schedule == null) {
+      throw new Error(
+        'SIGAA: Invalid courses table, could not find the column with class schedules.'
+      );
+    }
+
+    for (const row of rows) {
+      const cellElements = frontPage.$(row).find('td');
+      const title = this.parser.removeTagsHtml(
+        cellElements.eq(tableColumnIndexs.title).html()
+      );
+      const classLocal = this.parser.removeTagsHtml(
+        cellElements.eq(tableColumnIndexs.classLocal).html()
+      );
+      const schedule = this.parser.removeTagsHtml(
+        cellElements.eq(tableColumnIndexs.schedule).html()
+      );
+
+      const courseData = {
+        title,
+        classLocal,
+        schedule
+      };
+      coursesLocal.push(courseData);
+    }
+    return coursesLocal;
+  }
+
   /**
    * Get courses, in IFSC it is called "Turmas Virtuais".
    * @param allPeriods if true, all courses will be returned; otherwise, only latest courses.
@@ -164,6 +244,8 @@ export class SigaaStudentBond implements StudentBond {
         'SIGAA: Invalid courses table, could not find the column with class schedules.'
       );
     }
+
+    let coursesLocal = await this.getCoursesLocal();
     let period;
 
     for (const row of rows) {
@@ -177,6 +259,10 @@ export class SigaaStudentBond implements StudentBond {
 
         const [code, ...titleSlices] = fullname.split(' - ');
         const title = titleSlices.join(' - ');
+        let local;
+        for (const cl of coursesLocal) {
+          if (title === cl.title) local = cl.classLocal;
+        }
         const buttonCoursePage = cellElements
           .eq(tableColumnIndexs.button)
           .find('a[onclick]');
@@ -208,6 +294,7 @@ export class SigaaStudentBond implements StudentBond {
           title,
           code,
           schedule,
+          classLocal: local,
           numberOfStudents,
           period,
           id,
