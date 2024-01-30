@@ -89,11 +89,11 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#changePassword" class="tsd-kind-icon">change<wbr>Password</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#downloadProfilePicture" class="tsd-kind-icon">download<wbr>Profile<wbr>Picture</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getActiveBonds" class="tsd-kind-icon">get<wbr>Active<wbr>Bonds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getEmails" class="tsd-kind-icon">get<wbr>Emails</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getInactiveBonds" class="tsd-kind-icon">get<wbr>Inactive<wbr>Bonds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getName" class="tsd-kind-icon">get<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getProfilePictureResponse" class="tsd-kind-icon">get<wbr>Profile<wbr>Picture<wbr>Response</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#getProfilePictureURL" class="tsd-kind-icon">get<wbr>Profile<wbr>PictureURL</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Account.html#logoff" class="tsd-kind-icon">logoff</a></li>
 							</ul>
@@ -113,7 +113,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L67">src/account/sigaa-account.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L72">account/sigaa-account.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -149,48 +149,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="downloadProfilePicture" class="tsd-anchor"></a>
-					<h3>download<wbr>Profile<wbr>Picture</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">download<wbr>Profile<wbr>Picture<span class="tsd-signature-symbol">(</span>destpath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L44">src/account/sigaa-account.ts:44</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Download profile url and save in basepath.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>retuns</dt>
-									<dd><p>Full path of the downloaded file, useful if the destpath is a directory, or null if the user has no photo.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>destpath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>It can be either a folder or a file name, if the path is a directory then it will be saved inside the folder, if it is a file name it will be saved exactly in this place, but if the folder does not exist it will throw an error.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>To know the progress of the download, each downloaded part will be called informing how much has already been downloaded.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="getActiveBonds" class="tsd-anchor"></a>
 					<h3>get<wbr>Active<wbr>Bonds</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -200,7 +158,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L30">src/account/sigaa-account.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L35">account/sigaa-account.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -224,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L22">src/account/sigaa-account.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L27">account/sigaa-account.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,7 +205,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L36">src/account/sigaa-account.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L41">account/sigaa-account.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -270,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L16">src/account/sigaa-account.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L21">account/sigaa-account.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -284,16 +242,58 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="getProfilePictureURL" class="tsd-anchor"></a>
-					<h3>get<wbr>Profile<wbr>PictureURL</h3>
+					<a name="getProfilePictureResponse" class="tsd-anchor"></a>
+					<h3>get<wbr>Profile<wbr>Picture<wbr>Response</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Profile<wbr>PictureURL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Profile<wbr>Picture<wbr>Response<span class="tsd-signature-symbol">(</span>responseType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ResponseType</span>, callback<span class="tsd-signature-symbol">: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L53">src/account/sigaa-account.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L49">account/sigaa-account.ts:49</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Download profile url and return the response in an selected format to save on local storage.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>retuns</dt>
+									<dd><p>Url response from picture to save on local storage, or null if the user has no photo.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>responseType: <span class="tsd-signature-type">ResponseType</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of response to expect.</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>To know the progress of the download, each downloaded part will be called informing how much has already been downloaded.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getProfilePictureURL" class="tsd-anchor"></a>
+					<h3>get<wbr>Profile<wbr>PictureURL</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Profile<wbr>PictureURL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L58">account/sigaa-account.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,7 +306,7 @@
 									</dd>
 								</dl>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -320,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/account/sigaa-account.ts#L58">src/account/sigaa-account.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/account/sigaa-account.ts#L63">account/sigaa-account.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,9 +353,6 @@
 								<a href="Account.html#changePassword" class="tsd-kind-icon">change<wbr>Password</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="Account.html#downloadProfilePicture" class="tsd-kind-icon">download<wbr>Profile<wbr>Picture</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="Account.html#getActiveBonds" class="tsd-kind-icon">get<wbr>Active<wbr>Bonds</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -366,6 +363,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="Account.html#getName" class="tsd-kind-icon">get<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="Account.html#getProfilePictureResponse" class="tsd-kind-icon">get<wbr>Profile<wbr>Picture<wbr>Response</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="Account.html#getProfilePictureURL" class="tsd-kind-icon">get<wbr>Profile<wbr>PictureURL</a>
@@ -397,15 +397,16 @@
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 		</div>
 	</div>

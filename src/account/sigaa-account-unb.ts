@@ -1,11 +1,12 @@
 import { Parser } from '@helpers/sigaa-parser';
-import { HTTP, ProgressCallback } from '@session/sigaa-http';
+import { FileResponse, HTTP, ProgressCallback } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
 import { BondFactory, BondType } from '@bonds/sigaa-bond-factory';
 import { Page } from '@session/sigaa-page';
 import { Account } from './sigaa-account';
 import URLparse from 'url-parse';
+import { ResponseType } from 'axios';
 
 /**
  * Responsible for representing the user account.
@@ -256,6 +257,18 @@ export class SigaaAccountUNB implements Account {
     if (!pictureSrc || pictureSrc.includes('/sigaa/img/no_picture.png'))
       return null;
     return new URLparse(pictureSrc, page.url);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  async getProfilePictureResponse(
+    responseType: ResponseType,
+    callback?: ProgressCallback
+  ): Promise<FileResponse | null> {
+    const pictureURL = await this.getProfilePictureURL();
+    if (!pictureURL) return null;
+    return this.http.fileResponseByGet(pictureURL.href, callback, responseType);
   }
 
   /**

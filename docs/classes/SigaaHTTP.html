@@ -106,15 +106,14 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#closeSession" class="tsd-kind-icon">close<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#convertReadebleToBuffer" class="tsd-kind-icon">convert<wbr>Readeble<wbr>ToBuffer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#downloadFile" class="tsd-kind-icon">download<wbr>File</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#downloadFileByGet" class="tsd-kind-icon">download<wbr>File<wbr>ByGet</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#downloadFileByPost" class="tsd-kind-icon">download<wbr>File<wbr>ByPost</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#encodePostValue" class="tsd-kind-icon">encode<wbr>Post<wbr>Value</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#encodeWithRFC3986" class="tsd-kind-icon">encode<wbr>WithRFC3986</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#fileResponseByGet" class="tsd-kind-icon">file<wbr>Response<wbr>ByGet</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#fileResponseByPost" class="tsd-kind-icon">file<wbr>Response<wbr>ByPost</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#followAllRedirect" class="tsd-kind-icon">follow<wbr>All<wbr>Redirect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#getFileResponse" class="tsd-kind-icon">get<wbr>File<wbr>Response</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="SigaaHTTP.html#getRequestBasicOptions" class="tsd-kind-icon">get<wbr>Request<wbr>Basic<wbr>Options</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="SigaaHTTP.html#parserResponse" class="tsd-kind-icon">parser<wbr>Response</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#post" class="tsd-kind-icon">post</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="SigaaHTTP.html#postMultipart" class="tsd-kind-icon">post<wbr>Multipart</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="SigaaHTTP.html#requestHTTP" class="tsd-kind-icon">requestHTTP</a></li>
@@ -130,19 +129,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>SigaaHTTP<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SigaaHTTP.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaHTTP</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>SigaaHTTP<span class="tsd-signature-symbol">(</span>httpSession<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SigaaHTTP.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaHTTP</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L134">src/session/sigaa-http.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L144">session/sigaa-http.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>session: <a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a></h5>
+									<h5>httpSession: <a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="SigaaHTTP.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaHTTP</a></h4>
@@ -163,7 +162,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#closeSession">closeSession</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L256">src/session/sigaa-http.ts:256</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L208">session/sigaa-http.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -185,7 +184,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L320">src/session/sigaa-http.ts:320</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L272">session/sigaa-http.ts:272</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,148 +206,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="downloadFile" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> download<wbr>File</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">download<wbr>File<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span>, basepath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L166">src/session/sigaa-http.ts:166</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd></dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>url: <span class="tsd-signature-type">URL</span></h5>
-								</li>
-								<li>
-									<h5>basepath: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>httpOptions: <a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> body: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="downloadFileByGet" class="tsd-anchor"></a>
-					<h3>download<wbr>File<wbr>ByGet</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">download<wbr>File<wbr>ByGet<span class="tsd-signature-symbol">(</span>urlPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, basepath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#downloadFileByGet">downloadFileByGet</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L139">src/session/sigaa-http.ts:139</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Download a file</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>urlPath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>file url</p>
-									</div>
-								</li>
-								<li>
-									<h5>basepath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>path to save file</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>callback to view download progress</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="downloadFileByPost" class="tsd-anchor"></a>
-					<h3>download<wbr>File<wbr>ByPost</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">download<wbr>File<wbr>ByPost<span class="tsd-signature-symbol">(</span>urlPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, basepath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#downloadFileByPost">downloadFileByPost</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L152">src/session/sigaa-http.ts:152</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Download a file</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>urlPath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>file url</p>
-									</div>
-								</li>
-								<li>
-									<h5>postValues: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>basepath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>path to save file</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>callback to view download progress</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="encodePostValue" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> encode<wbr>Post<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">encode<wbr>Post<wbr>Value<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a><span class="tsd-signature-symbol"> }</span></li>
+						<li class="tsd-signature tsd-kind-icon">encode<wbr>Post<wbr>Value<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a><span class="tsd-signature-symbol"> }</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L391">src/session/sigaa-http.ts:391</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L343">session/sigaa-http.ts:343</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -359,7 +226,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>url: <span class="tsd-signature-type">URL</span></h5>
+									<h5>url: <span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>postValues: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -392,7 +259,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L349">src/session/sigaa-http.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L301">session/sigaa-http.ts:301</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,17 +281,105 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="fileResponseByGet" class="tsd-anchor"></a>
+					<h3>file<wbr>Response<wbr>ByGet</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">file<wbr>Response<wbr>ByGet<span class="tsd-signature-symbol">(</span>urlPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a>, responseType<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ResponseType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#fileResponseByGet">fileResponseByGet</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L149">session/sigaa-http.ts:149</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Download response file</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>urlPath: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>file url</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback to view download progress</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> responseType: <span class="tsd-signature-type">ResponseType</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of response to expect.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="fileResponseByPost" class="tsd-anchor"></a>
+					<h3>file<wbr>Response<wbr>ByPost</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">file<wbr>Response<wbr>ByPost<span class="tsd-signature-symbol">(</span>urlPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#fileResponseByPost">fileResponseByPost</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L165">session/sigaa-http.ts:165</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Download response file</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>urlPath: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>file url</p>
+									</div>
+								</li>
+								<li>
+									<h5>postValues: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>data to send on post method</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback to view download progress</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="followAllRedirect" class="tsd-anchor"></a>
 					<h3>follow<wbr>All<wbr>Redirect</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">follow<wbr>All<wbr>Redirect<span class="tsd-signature-symbol">(</span>page<span class="tsd-signature-symbol">: </span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">follow<wbr>All<wbr>Redirect<span class="tsd-signature-symbol">(</span>page<span class="tsd-signature-symbol">: </span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#followAllRedirect">followAllRedirect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L558">src/session/sigaa-http.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L516">session/sigaa-http.ts:516</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,13 +390,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>page: <a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a></h5>
+									<h5>page: <a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>The last page of redirects</p>
 						</li>
 					</ul>
@@ -450,14 +405,14 @@
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L412">src/session/sigaa-http.ts:412</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L384">session/sigaa-http.ts:384</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -474,7 +429,45 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getFileResponse" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>File<wbr>Response</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>File<wbr>Response<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L178">session/sigaa-http.ts:178</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>inheritdoc</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>url: <span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>httpOptions: <a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> body: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules.html#ProgressCallback" class="tsd-signature-type" data-tsd-kind="Type alias">ProgressCallback</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#FileResponse" class="tsd-signature-type" data-tsd-kind="Type alias">FileResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -482,13 +475,13 @@
 					<a name="getRequestBasicOptions" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Request<wbr>Basic<wbr>Options</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Request<wbr>Basic<wbr>Options<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules.html#HTTPMethod" class="tsd-signature-type" data-tsd-kind="Type alias">HTTPMethod</a>, link<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span>, additionalHeaders<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Request<wbr>Basic<wbr>Options<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules.html#HTTPMethod" class="tsd-signature-type" data-tsd-kind="Type alias">HTTPMethod</a>, link<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, additionalHeaders<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L268">src/session/sigaa-http.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L220">session/sigaa-http.ts:220</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -505,7 +498,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>link: <span class="tsd-signature-type">URL</span></h5>
+									<h5>link: <span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>URL of Request</p>
 									</div>
@@ -522,41 +515,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="parserResponse" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> parser<wbr>Response</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">parser<wbr>Response<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IncomingMessage</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/HTTPResponse.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L500">src/session/sigaa-http.ts:500</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>response: <span class="tsd-signature-type">IncomingMessage</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/HTTPResponse.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="post" class="tsd-anchor"></a>
 					<h3>post</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, postValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#post">post</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L370">src/session/sigaa-http.ts:370</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L322">session/sigaa-http.ts:322</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -582,7 +552,7 @@
 									<h5>options: <a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -590,14 +560,14 @@
 					<a name="postMultipart" class="tsd-anchor"></a>
 					<h3>post<wbr>Multipart</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">post<wbr>Multipart<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, formData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">FormData</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">post<wbr>Multipart<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, formData<span class="tsd-signature-symbol">: </span><a href="../modules.html#FormData" class="tsd-signature-type" data-tsd-kind="Type alias">FormData</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTP.html">HTTP</a>.<a href="../interfaces/HTTP.html#postMultipart">postMultipart</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L299">src/session/sigaa-http.ts:299</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L251">session/sigaa-http.ts:251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -614,7 +584,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>formData: <span class="tsd-signature-type">FormData</span></h5>
+									<h5>formData: <a href="../modules.html#FormData" class="tsd-signature-type" data-tsd-kind="Type alias">FormData</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>instance of FormData</p>
 									</div>
@@ -623,7 +593,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -631,13 +601,13 @@
 					<a name="requestHTTP" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> requestHTTP</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">requestHTTP<span class="tsd-signature-symbol">(</span>optionsHTTP<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/HTTPResponse.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">requestHTTP<span class="tsd-signature-symbol">(</span>optionsHTTP<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span>, postForm<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L482">src/session/sigaa-http.ts:482</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L471">session/sigaa-http.ts:471</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -659,8 +629,11 @@
 										<p>of request</p>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> postForm: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/HTTPResponse.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Request</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -668,13 +641,13 @@
 					<a name="requestPage" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> request<wbr>Page</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">request<wbr>Page<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span>, httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, requestBody<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">request<wbr>Page<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, httpOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPRequestOptions</a>, requestBody<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/SigaaRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SigaaRequestOptions</a>, postForm<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http.ts#L429">src/session/sigaa-http.ts:429</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http.ts#L401">session/sigaa-http.ts:401</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -685,7 +658,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>url: <span class="tsd-signature-type">URL</span></h5>
+									<h5>url: <span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>url of request</p>
 									</div>
@@ -702,8 +675,11 @@
 										<p>http.request options</p>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> postForm: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Page.html" class="tsd-signature-type" data-tsd-kind="Interface">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#Page" class="tsd-signature-type" data-tsd-kind="Type alias">Page</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -734,19 +710,16 @@
 								<a href="SigaaHTTP.html#convertReadebleToBuffer" class="tsd-kind-icon">convert<wbr>Readeble<wbr>ToBuffer</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="SigaaHTTP.html#downloadFile" class="tsd-kind-icon">download<wbr>File</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="SigaaHTTP.html#downloadFileByGet" class="tsd-kind-icon">download<wbr>File<wbr>ByGet</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="SigaaHTTP.html#downloadFileByPost" class="tsd-kind-icon">download<wbr>File<wbr>ByPost</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="SigaaHTTP.html#encodePostValue" class="tsd-kind-icon">encode<wbr>Post<wbr>Value</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="SigaaHTTP.html#encodeWithRFC3986" class="tsd-kind-icon">encode<wbr>WithRFC3986</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="SigaaHTTP.html#fileResponseByGet" class="tsd-kind-icon">file<wbr>Response<wbr>ByGet</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="SigaaHTTP.html#fileResponseByPost" class="tsd-kind-icon">file<wbr>Response<wbr>ByPost</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="SigaaHTTP.html#followAllRedirect" class="tsd-kind-icon">follow<wbr>All<wbr>Redirect</a>
@@ -755,10 +728,10 @@
 								<a href="SigaaHTTP.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="SigaaHTTP.html#getRequestBasicOptions" class="tsd-kind-icon">get<wbr>Request<wbr>Basic<wbr>Options</a>
+								<a href="SigaaHTTP.html#getFileResponse" class="tsd-kind-icon">get<wbr>File<wbr>Response</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="SigaaHTTP.html#parserResponse" class="tsd-kind-icon">parser<wbr>Response</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="SigaaHTTP.html#getRequestBasicOptions" class="tsd-kind-icon">get<wbr>Request<wbr>Basic<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="SigaaHTTP.html#post" class="tsd-kind-icon">post</a>
@@ -796,15 +769,16 @@
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 		</div>
 	</div>

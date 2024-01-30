@@ -1,9 +1,15 @@
 import { FormData } from 'formdata-node';
 import { Page } from './sigaa-page';
-import { HTTP, ProgressCallback, SigaaRequestOptions } from './sigaa-http';
+import {
+  FileResponse,
+  HTTP,
+  ProgressCallback,
+  SigaaRequestOptions
+} from './sigaa-http';
 import { BondController } from './sigaa-bond-controller';
 import { PageCacheWithBond } from './sigaa-page-cache-with-bond';
-import URLParser from 'url-parse'
+import URLParser from 'url-parse';
+import { ResponseType } from 'axios';
 
 /**
  * Implements sigaa bond in HTTP request class.
@@ -77,6 +83,36 @@ export class SigaaHTTPWithBond implements HTTP {
   async get(path: string, options?: SigaaRequestOptions): Promise<Page> {
     await this.verifyIfBondIsCorrect();
     return this.http.get(path, options);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  async fileResponseByGet(
+    urlPath: string,
+    callback?: ProgressCallback,
+    responseType?: ResponseType
+  ): Promise<FileResponse> {
+    await this.verifyIfBondIsCorrect();
+    return this.http.fileResponseByGet(urlPath, callback, responseType);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  async fileResponseByPost(
+    urlPath: string,
+    postValues: Record<string, string>,
+    callback?: ProgressCallback,
+    responseType?: ResponseType
+  ): Promise<FileResponse> {
+    await this.verifyIfBondIsCorrect();
+    return this.http.fileResponseByPost(
+      urlPath,
+      postValues,
+      callback,
+      responseType
+    );
   }
 
   /**

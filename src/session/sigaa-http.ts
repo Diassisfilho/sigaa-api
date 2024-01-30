@@ -1,5 +1,9 @@
-import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
-import URLParser from 'url-parse'
+import axios, {
+  AxiosResponse,
+  AxiosResponseHeaders,
+  ResponseType
+} from 'axios';
+import URLParser from 'url-parse';
 import { HTTPMethod } from '../sigaa-types';
 import { HTTPSession } from './sigaa-http-session';
 import { Buffer } from 'buffer';
@@ -27,12 +31,18 @@ export type FormData = {
 };
 
 /**
+ * @category Public
+ */
+export type FileResponse = string | ArrayBuffer | Object | Blob;
+
+/**
  * @category Internal
  */
 export interface SigaaRequestOptions {
   mobile?: boolean;
   noCache?: boolean;
   shareSameRequest?: boolean;
+  responseType?: ResponseType;
 }
 
 /**
@@ -43,6 +53,7 @@ export interface HTTPRequestOptions {
   path: string;
   method: HTTPMethod;
   headers: Record<string, string>;
+  responseType?: ResponseType;
 }
 
 /**
@@ -85,6 +96,32 @@ export interface HTTP {
   get(path: string, options?: SigaaRequestOptions): Promise<Page>;
 
   /**
+   * Download response file
+   * @param urlPath file url
+   * @param callback callback to view download progress
+   * @param responseType The type of response to expect.
+   */
+  fileResponseByGet(
+    urlPath: string,
+    callback?: ProgressCallback,
+    responseType?: ResponseType
+  ): Promise<FileResponse>;
+
+  /**
+   * Download response file
+   * @param urlPath file url
+   * @param postValues data to send on post method
+   * @param callback callback to view download progress
+   * @param responseType The type of response to expect.
+   */
+  fileResponseByPost(
+    urlPath: string,
+    postValues: Record<string, string>,
+    callback?: ProgressCallback,
+    responseType?: ResponseType
+  ): Promise<FileResponse>;
+
+  /**
    * Follow the redirect while the page response redirects to another page
    * @param page
    * @returns The last page of redirects
@@ -105,6 +142,65 @@ export interface HTTP {
  */
 export class SigaaHTTP implements HTTP {
   constructor(private httpSession: HTTPSession) {}
+
+  /**
+   * @inheritdoc
+   */
+  async fileResponseByGet(
+    urlPath: string,
+    callback?: ProgressCallback,
+    responseType?: ResponseType
+  ): Promise<FileResponse> {
+    const url = this.httpSession.getURL(urlPath);
+    const httpOptions = this.getRequestBasicOptions('GET', url, undefined, {
+      responseType,
+      mobile: false
+    });
+    return this.getFileResponse(url, httpOptions, undefined, callback);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  fileResponseByPost(
+    urlPath: string,
+    postValues: Record<string, string>,
+    callback?: ProgressCallback
+  ): Promise<FileResponse> {
+    const url = this.httpSession.getURL(urlPath);
+    const { httpOptions, body } = this.encodePostValue(url, postValues);
+    return this.getFileResponse(url, httpOptions, body, callback);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  private async getFileResponse(
+    url: URLParser<string>,
+    httpOptions: HTTPRequestOptions,
+    body?: string,
+    callback?: ProgressCallback
+  ): Promise<FileResponse> {
+    const sessionHttpOptions = await this.httpSession.afterHTTPOptions(
+      url,
+      httpOptions
+    );
+
+    const { data, headers, status, request } = await this.requestHTTP(
+      httpOptions
+    );
+
+    if (status === 302) throw new Error('SIGAA: Download expired.');
+
+    if (status !== 200)
+      throw new Error('SIGAA: Invalid status code at download file page.');
+
+    if (!data) {
+      throw new Error('SIGAA: Invalid reponse type.');
+    }
+
+    return data;
+  }
 
   /**
    * @inheritdoc
@@ -134,13 +230,16 @@ export class SigaaHTTP implements HTTP {
       path: `${link.pathname}${link.query}`,
       method,
       headers: {
-        'User-Agent': `SIGAA-Api/1.0 (${options.mobile ? 'Android 7.0; ' : ''}https://github.com/GeovaneSchmitz/sigaa-api)`,
+        'User-Agent': `SIGAA-Api/1.0 (${
+          options.mobile ? 'Android 7.0; ' : ''
+        }https://github.com/GeovaneSchmitz/sigaa-api)`,
         'Accept-Encoding': 'br, gzip, deflate',
         Accept: '*/*',
         'Cache-Control': 'max-age=0',
         DNT: '1',
         ...additionalHeaders
-      }
+      },
+      responseType: options.responseType ? options.responseType : undefined
     };
 
     return basicOptions;
@@ -152,7 +251,7 @@ export class SigaaHTTP implements HTTP {
   public async postMultipart(
     path: string,
     formData: FormData,
-    options?: SigaaRequestOptions,
+    options?: SigaaRequestOptions
   ): Promise<Page> {
     const url = this.httpSession.getURL(path);
     const httpOptions = this.getRequestBasicOptions(
@@ -250,20 +349,25 @@ export class SigaaHTTP implements HTTP {
     //   encodeURIComponent: this.encodeWithRFC3986
     // });
     class CustomSearchParams extends URLSearchParams {
-    encodingFunction: (str: string) => string;
+      encodingFunction: (str: string) => string;
 
-    constructor(data: string[][] | Record<string, string> | string | CustomSearchParams, encodingFunction: (str: string) => string) {
+      constructor(
+        data: string[][] | Record<string, string> | string | CustomSearchParams,
+        encodingFunction: (str: string) => string
+      ) {
         super(data);
         this.encodingFunction = encodingFunction;
       }
-    
+
       encodeURIComponent(str: string) {
         return this.encodingFunction(str);
       }
     }
 
-    const body = new CustomSearchParams(postValues, this.encodeWithRFC3986).toString();
-
+    const body = new CustomSearchParams(
+      postValues,
+      this.encodeWithRFC3986
+    ).toString();
 
     const httpOptions = this.getRequestBasicOptions(
       'POST',
@@ -326,8 +430,10 @@ export class SigaaHTTP implements HTTP {
         postForm
       );
 
-      const responseURL = request.res? request.res.responseUrl : request.responseURL
-      const redirectedURL = new URLParser(responseURL)      
+      const responseURL = request.res
+        ? request.res.responseUrl
+        : request.responseURL;
+      const redirectedURL = new URLParser(responseURL);
 
       const SigaaPageInstitution: SigaaPageInstitutionMap = {
         IFSC: SigaaPageIFSC,
@@ -346,7 +452,7 @@ export class SigaaHTTP implements HTTP {
         statusCode: status,
         requestBody
       });
-      
+
       return this.httpSession.afterSuccessfulRequest(page, options);
     } catch (err) {
       return this.httpSession.afterUnsuccessfulRequest(
@@ -366,9 +472,9 @@ export class SigaaHTTP implements HTTP {
     optionsHTTP: HTTPRequestOptions,
     body?: string | Buffer,
     postForm?: boolean
-  ): Promise<AxiosResponse<Request>> {
+  ): Promise<AxiosResponse<Request & FileResponse>> {
     return new Promise((resolve, reject) => {
-      const { hostname, path, method, headers } = optionsHTTP;
+      const { hostname, path, method, headers, responseType } = optionsHTTP;
       const baseURL = 'https://' + hostname;
       const data = body ? body : undefined;
       const url = path as string | undefined;
@@ -378,7 +484,8 @@ export class SigaaHTTP implements HTTP {
           .postForm(baseURL + url, {
             data,
             method,
-            headers
+            headers,
+            responseType
           })
           .then((response) => {
             resolve(response);
@@ -394,7 +501,8 @@ export class SigaaHTTP implements HTTP {
         data,
         method,
         headers,
-        withCredentials : false
+        withCredentials: false,
+        responseType
       })
         .then((response) => {
           resolve(response);

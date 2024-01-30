@@ -112,19 +112,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>SigaaHTTPFactory<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a>, pageCacheWithBond<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PageCacheWithBond</span>, bondController<span class="tsd-signature-symbol">: </span><a href="../interfaces/BondController.html" class="tsd-signature-type" data-tsd-kind="Interface">BondController</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SigaaHTTPFactory.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaHTTPFactory</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>SigaaHTTPFactory<span class="tsd-signature-symbol">(</span>httpSession<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a>, pageCacheWithBond<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PageCacheWithBond</span>, bondController<span class="tsd-signature-symbol">: </span><a href="../interfaces/BondController.html" class="tsd-signature-type" data-tsd-kind="Interface">BondController</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SigaaHTTPFactory.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaHTTPFactory</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http-factory.ts#L27">src/session/sigaa-http-factory.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http-factory.ts#L28">session/sigaa-http-factory.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>session: <a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a></h5>
+									<h5>httpSession: <a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a></h5>
 								</li>
 								<li>
 									<h5>pageCacheWithBond: <span class="tsd-signature-type">PageCacheWithBond</span></h5>
@@ -151,7 +151,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTPFactory.html">HTTPFactory</a>.<a href="../interfaces/HTTPFactory.html#createHttp">createHttp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http-factory.ts#L36">src/session/sigaa-http-factory.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http-factory.ts#L37">session/sigaa-http-factory.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -167,14 +167,14 @@
 					<a name="createHttpWithBond" class="tsd-anchor"></a>
 					<h3>create<wbr>Http<wbr>With<wbr>Bond</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Http<wbr>With<wbr>Bond<span class="tsd-signature-symbol">(</span>bondSwitchUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTP.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTP</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Http<wbr>With<wbr>Bond<span class="tsd-signature-symbol">(</span>bondSwitchUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTP.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTP</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/HTTPFactory.html">HTTPFactory</a>.<a href="../interfaces/HTTPFactory.html#createHttpWithBond">createHttpWithBond</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/session/sigaa-http-factory.ts#L43">src/session/sigaa-http-factory.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/session/sigaa-http-factory.ts#L44">session/sigaa-http-factory.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -185,7 +185,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>bondSwitchUrl: <span class="tsd-signature-type">URL</span></h5>
+									<h5>bondSwitchUrl: <span class="tsd-signature-type">URLParse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/HTTP.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTP</a></h4>
@@ -242,15 +242,16 @@
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 		</div>
 	</div>

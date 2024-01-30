@@ -1,4 +1,4 @@
-import URLParser from 'url-parse'
+import URLParser from 'url-parse';
 import { isEqual } from 'lodash';
 import { RequestStacks } from '@helpers/sigaa-request-stack';
 import {
@@ -18,29 +18,6 @@ import { InstitutionController } from './sigaa-institution-controller';
  */
 export interface HTTPSession {
   institutionController: InstitutionController;
-  /**
-   * if returns string the download is suspended
-   * @param url
-   * @param sessionHttpOptions
-   * @param requestBody
-   */
-  beforeDownloadRequest(
-    url: URL,
-    downloadPath: string,
-    sessionHttpOptions: HTTPRequestOptions,
-    bodyRequest?: string,
-    callback?: ProgressCallback
-  ): Promise<string | null>;
-
-  afterDownloadRequest(
-    url: URL,
-    downloadPath: string,
-    sessionHttpOptions: HTTPRequestOptions,
-    finalPath: string,
-    bodyRequest?: string,
-    callback?: ProgressCallback
-  ): Promise<string>;
-
   /**
    * it is called after a sigaa response, only if successful. Should return a page or throw an error.
    * @param page Sigaa page
@@ -137,25 +114,6 @@ export class SigaaHTTPSession implements HTTPSession {
     private pageCache: PageCache,
     private requestStack: RequestStackController<Request, Page>
   ) {}
-
-  /**
-   * @inheritdoc
-   */
-  async afterDownloadRequest(
-    url: URL,
-    downloadPath: string,
-    sessionHttpOptions: HTTPRequestOptions,
-    finalPath: string
-  ): Promise<string> {
-    return finalPath;
-  }
-
-  /**
-   * @inheritdoc
-   */
-  async beforeDownloadRequest(): Promise<null> {
-    return null;
-  }
 
   get requestStacks(): RequestStacks<Request, Page> {
     return this.requestStack.getStacksByDomain(

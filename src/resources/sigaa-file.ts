@@ -1,4 +1,4 @@
-import { HTTP, ProgressCallback } from '@session/sigaa-http';
+import { FileResponse, HTTP, ProgressCallback } from '@session/sigaa-http';
 import { SigaaForm } from '@session/sigaa-page';
 import { UpdatableResourceData } from './sigaa-resource-manager';
 import {
@@ -6,6 +6,7 @@ import {
   UpdatableResource,
   UpdatableResourceCallback
 } from './updatable-resource';
+import { ResponseType } from 'axios';
 
 /**
  * @category Internal
@@ -49,6 +50,16 @@ export interface File extends UpdatableResource<FileData> {
    *Description in the sigaa
    */
   readonly description?: string;
+  /**
+   * Download the response of file
+   * @param responseType The type of response to expect.
+   * @param callback callback to view download progress
+   * @retuns URL response from file in selected format.
+   */
+  download(
+    responseType: ResponseType,
+    callback?: ProgressCallback
+  ): Promise<FileResponse>;
 }
 
 /**
@@ -122,4 +133,36 @@ export class SigaaFile extends AbstractUpdatableResource implements File {
     return this._id;
   }
 
+  async download(
+    responseType: ResponseType,
+    callback?: ProgressCallback,
+    retry = true
+  ): Promise<FileResponse> {
+    this.checkIfItWasClosed();
+    if (this.form) {
+      return this.http
+        .fileResponseByPost(
+          this.form.action.href,
+          this.form.postValues,
+          callback
+        )
+        .catch(async (err: any) => {
+          this.form = undefined;
+          await this.updateInstance();
+          if (retry) return this.download(responseType, callback, false);
+          else throw err;
+        });
+    } else if (this.key != null) {
+      const fileDownloadPath = `/sigaa/verFoto?idArquivo=${this.id}&key=${this.key}`;
+      return this.http
+        .fileResponseByGet(fileDownloadPath, callback, 'stream')
+        .catch((err: any) => {
+          if (retry) return this.download(responseType, callback, false);
+          else throw err;
+        });
+    }
+    throw new Error(
+      'SIGAA: Could not download the file because the key is missing.'
+    );
+  }
 }

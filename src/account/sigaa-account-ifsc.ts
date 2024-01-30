@@ -1,11 +1,12 @@
 import { Parser } from '@helpers/sigaa-parser';
-import { HTTP } from '@session/sigaa-http';
+import { FileResponse, HTTP, ProgressCallback } from '@session/sigaa-http';
 import { Session } from '@session/sigaa-session';
 import { LoginStatus } from '../sigaa-types';
-import URLParser from 'url-parse'
+import URLParser from 'url-parse';
 import { BondFactory, BondType } from '@bonds/sigaa-bond-factory';
 import { Page } from '@session/sigaa-page';
 import { Account } from './sigaa-account';
+import { ResponseType } from 'axios';
 
 /**
  * Responsible for representing the user account.
@@ -252,6 +253,21 @@ export class SigaaAccountIFSC implements Account {
     if (!pictureSrc || pictureSrc.includes('/sigaa/img/no_picture.png'))
       return null;
     return new URLParser(pictureSrc, page.url);
+  }
+
+  /**
+   * Download profile url and return the response in an selected format to save on local storage.
+   * @param responseType The type of response to expect.
+   * @param callback To know the progress of the download, each downloaded part will be called informing how much has already been downloaded.
+   * @retuns Url response from picture to save on local storage, or null if the user has no photo.
+   */
+  async getProfilePictureResponse(
+    responseType: ResponseType,
+    callback?: ProgressCallback
+  ): Promise<FileResponse | null> {
+    const pictureURL = await this.getProfilePictureURL();
+    if (!pictureURL) return null;
+    return this.http.fileResponseByGet(pictureURL.href, callback, responseType);
   }
 
   /**

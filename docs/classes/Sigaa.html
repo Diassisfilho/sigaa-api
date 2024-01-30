@@ -112,7 +112,6 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Sigaa.html#close" class="tsd-kind-icon">close</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Sigaa.html#loadFile" class="tsd-kind-icon">load<wbr>File</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Sigaa.html#login" class="tsd-kind-icon">login</a></li>
 							</ul>
 						</section>
@@ -125,19 +124,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Sigaa<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../modules.html#SigaaOptionsConstructor" class="tsd-signature-type" data-tsd-kind="Type alias">SigaaOptionsConstructor</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Sigaa.html" class="tsd-signature-type" data-tsd-kind="Class">Sigaa</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Sigaa<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SigaaCommonConstructorOptions</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>institution<span class="tsd-signature-symbol">: </span><a href="../modules.html#InstitutionType" class="tsd-signature-type" data-tsd-kind="Type alias">InstitutionType</a><span class="tsd-signature-symbol">; </span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>httpSession<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a><span class="tsd-signature-symbol">; </span>session<span class="tsd-signature-symbol">: </span><a href="../interfaces/Session.html" class="tsd-signature-type" data-tsd-kind="Interface">Session</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SigaaConstructorURL</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">SigaaConstructorHTTP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithAccountFactory</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithBondFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>lessonParserFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/LessonParserFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">LessonParserFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>lessonParserFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/LessonParserFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">LessonParserFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Sigaa.html" class="tsd-signature-type" data-tsd-kind="Class">Sigaa</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L152">src/sigaa-main.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L161">sigaa-main.ts:161</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../modules.html#SigaaOptionsConstructor" class="tsd-signature-type" data-tsd-kind="Type alias">SigaaOptionsConstructor</a></h5>
+									<h5>options: <span class="tsd-signature-type">SigaaCommonConstructorOptions</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>institution<span class="tsd-signature-symbol">: </span><a href="../modules.html#InstitutionType" class="tsd-signature-type" data-tsd-kind="Type alias">InstitutionType</a><span class="tsd-signature-symbol">; </span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>httpSession<span class="tsd-signature-symbol">: </span><a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a><span class="tsd-signature-symbol">; </span>session<span class="tsd-signature-symbol">: </span><a href="../interfaces/Session.html" class="tsd-signature-type" data-tsd-kind="Interface">Session</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SigaaConstructorURL</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">SigaaConstructorHTTP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithAccountFactory</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#XOR" class="tsd-signature-type" data-tsd-kind="Type alias">XOR</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithBondFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>lessonParserFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/LessonParserFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">LessonParserFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>lessonParserFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/LessonParserFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">LessonParserFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>courseResourcesFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>courseResourcesManagerFactory<span class="tsd-signature-symbol">?: </span><a href="../interfaces/CourseResourcesManagerFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">CourseResourcesManagerFactory</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithActivityFactory</span><span class="tsd-signature-symbol"> &amp; </span><a href="../modules.html#Without" class="tsd-signature-type" data-tsd-kind="Type alias">Without</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">WithoutCourseFactory</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">WithCourseFactory</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="Sigaa.html" class="tsd-signature-type" data-tsd-kind="Class">Sigaa</a></h4>
@@ -153,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">account<wbr>Factory<span class="tsd-signature-symbol">:</span> <a href="../interfaces/AccountFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">AccountFactory</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L140">src/sigaa-main.ts:140</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L149">sigaa-main.ts:149</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">http<span class="tsd-signature-symbol">:</span> <a href="../interfaces/HTTP.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTP</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L150">src/sigaa-main.ts:150</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L159">sigaa-main.ts:159</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -183,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Factory<span class="tsd-signature-symbol">:</span> <a href="../interfaces/HTTPFactory.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPFactory</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L125">src/sigaa-main.ts:125</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L134">sigaa-main.ts:134</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Session<span class="tsd-signature-symbol">:</span> <a href="../interfaces/HTTPSession.html" class="tsd-signature-type" data-tsd-kind="Interface">HTTPSession</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L145">src/sigaa-main.ts:145</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L154">sigaa-main.ts:154</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">login<wbr>Instance<span class="tsd-signature-symbol">:</span> <a href="../interfaces/Login.html" class="tsd-signature-type" data-tsd-kind="Interface">Login</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L120">src/sigaa-main.ts:120</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L129">sigaa-main.ts:129</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -228,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">parser<span class="tsd-signature-symbol">:</span> <a href="../interfaces/Parser.html" class="tsd-signature-type" data-tsd-kind="Interface">Parser</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L130">src/sigaa-main.ts:130</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L139">sigaa-main.ts:139</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -243,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">session<span class="tsd-signature-symbol">:</span> <a href="../interfaces/Session.html" class="tsd-signature-type" data-tsd-kind="Interface">Session</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L135">src/sigaa-main.ts:135</a></li>
+							<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L144">sigaa-main.ts:144</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -265,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L334">src/sigaa-main.ts:334</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L350">sigaa-main.ts:350</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -290,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L341">src/sigaa-main.ts:341</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L357">sigaa-main.ts:357</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,34 +298,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="loadFile" class="tsd-anchor"></a>
-					<h3>load<wbr>File</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">load<wbr>File<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../modules.html#FileData" class="tsd-signature-type" data-tsd-kind="Type alias">FileData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SigaaFile.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaFile</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L327">src/sigaa-main.ts:327</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Load file to download.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <a href="../modules.html#FileData" class="tsd-signature-type" data-tsd-kind="Type alias">FileData</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="SigaaFile.html" class="tsd-signature-type" data-tsd-kind="Class">SigaaFile</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -340,7 +311,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GeovaneSchmitz/sigaa-api/blob/208e7e3/src/sigaa-main.ts#L308">src/sigaa-main.ts:308</a></li>
+									<li>Defined in <a href="https://github.com/Diassisfilho/sigaa-api/blob/c8e7ed4/src/sigaa-main.ts#L334">sigaa-main.ts:334</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -411,9 +382,6 @@
 								<a href="Sigaa.html#close" class="tsd-kind-icon">close</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="Sigaa.html#loadFile" class="tsd-kind-icon">load<wbr>File</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="Sigaa.html#login" class="tsd-kind-icon">login</a>
 							</li>
 						</ul>
@@ -440,15 +408,16 @@
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 		</div>
 	</div>

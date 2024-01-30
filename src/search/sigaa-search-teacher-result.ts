@@ -1,6 +1,7 @@
 import { Parser } from '@helpers/sigaa-parser';
-import { HTTP, ProgressCallback } from '@session/sigaa-http';
-import URLParser from 'url-parse'
+import { FileResponse, HTTP, ProgressCallback } from '@session/sigaa-http';
+import { ResponseType } from 'axios';
+import URLParser from 'url-parse';
 
 /**
  * @category Internal
@@ -25,12 +26,16 @@ export interface TeacherResult {
    */
   getEmail(): Promise<string | undefined>;
   /**
-   * Download user profile picture, save in basepath
-   * Returns the destination of the file on the file system
+   * Download user profile picture
+   * Returns the url response to save on local storage
    * Throws an exception if the teacher does not have a photo
-   * @param basepath path to save file
+   * @param responseType The type of response to expect.
    * @param callback
    */
+  getProfilePictureResponse(
+    responseType: ResponseType,
+    callback: ProgressCallback
+  ): Promise<FileResponse>;
 }
 
 /**
@@ -82,6 +87,19 @@ export class SigaaSearchTeacherResult implements TeacherResult {
 
   get profilePictureURL(): URLParser<string> | undefined {
     return this._photoURL;
+  }
+
+  getProfilePictureResponse(
+    responseType: ResponseType,
+    callback: ProgressCallback
+  ): Promise<FileResponse> {
+    if (!this.profilePictureURL)
+      throw new Error("SIGAA: This teacher doesn't have profile picture");
+    return this.http.fileResponseByGet(
+      this.profilePictureURL.href,
+      callback,
+      responseType
+    );
   }
 
   get department(): string {
